@@ -18,7 +18,7 @@ const Navbar = styled.ul`
     height:91px;`
 
 const NavLinkStyle = styled(NavLink)`
-width:250px;
+    width:250px;
     color: white;
     font-size: 25px;
     font-weight: 500;
