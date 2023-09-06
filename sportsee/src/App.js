@@ -1,10 +1,11 @@
 import './App.css';
-import GetData from './services/GetData';
+import { formData } from './services/formData';
 
 function App() {
-  
+
+console.log(formData().stMainData);
   return (
-    <div className="App"><GetData dataSection = "mainData"></GetData>
+    <div className="App">{formData().stMainData}
     </div>
   );
 }
