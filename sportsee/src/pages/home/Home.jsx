@@ -1,4 +1,3 @@
-import HeaderComponents from "../../components/header/Header";
 
 
 function Home(){
