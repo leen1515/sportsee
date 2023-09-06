@@ -26,7 +26,7 @@ function GetData ({dataSection}){
         const [userDataReduce, dispatch] = useReducer(userDataSwitch);
         useEffect(() => { 
             userData && dispatch({type : dataSection})}
-    , [dataSection, userData])
+    , [dataSection])
             console.log(userDataReduce)
     return [userDataReduce]
 }

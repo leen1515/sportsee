@@ -1,10 +1,10 @@
-import GetData from "./GetData";
+import GetData from "./GetDatas";
 
 
 export function formData(){
     const stateMainData = () => {
-        return Array.isArray(GetData({dataSection : "mainData"}))
-            }
+        return GetData({dataSection : "mainData"})
+    }
 
     const stateActivities = () => {
         return GetData({dataSection : "Activities"})

@@ -1,13 +1,9 @@
 import './App.css';
-import { formData } from './services/formData';
+import GetRoutes from './routes/GetRoutes';
 
 function App() {
 
-console.log(formData().stMainData);
-  return (
-    <div className="App">{formData().stMainData}
-    </div>
-  );
+  return <GetRoutes/>
 }
 
 export default App;
