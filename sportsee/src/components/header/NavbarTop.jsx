@@ -6,7 +6,8 @@ const Navbar = styled.ul`
     position:relative;
     z-index: 2;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    column-gap:calc(25% - 250px);
     flex-flow: row nowrap;
     align-items: center;
     list-style: none;
@@ -17,12 +18,14 @@ const Navbar = styled.ul`
     height:91px;`
 
 const NavLinkStyle = styled(NavLink)`
+width:250px;
     color: white;
-    font-size: 15px;
+    font-size: 25px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0px;
     text-align: left;
+    text-decoration:none;
 `
 const SportSeeLogo = styled.img`
     padding:10px;
