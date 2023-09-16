@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { getUserId, getActivity, getAverage, getPerformance } from './api';
+import { getUserId, getActivity, getAverage, getPerformance } from './Api';
 
 export async function getDatasSection(mock, userId, apiCall) {
     const API_URL = "http://localhost:3001";
