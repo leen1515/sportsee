@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { useContext, useState, useEffect} from 'react';
+import { useContext } from 'react';
 import { datasContext } from '../../routes/GetRoutes';
+import BarChart from '../../components/Barchart';
 
 const MainProfil = styled.main`
     position:absolute;
@@ -21,20 +22,21 @@ const Bienvenue = styled.p`
 `
 
 function Profil() {
-    const {datas, set} = useContext(datasContext);
-    const [infosUser, setInfosUser] = useState([null]);
-
-    useEffect(() => setInfosUser(datas.getDatasUserInfos().getUserInfos()), [datas, setInfosUser, set])
+    const {datas} = useContext(datasContext);
+    const userName = {firstName : datas?.userDatas.userInfos.firstName, lastName : datas?.userDatas.userInfos.lastName}
+    console.log("dataaaa PRofil", datas?.userDatas.userInfos)
 
     return <MainProfil>
         <UserCard>
             <UserName>
-            {infosUser && <span><Bienvenue>Bonjour</Bienvenue> {JSON.stringify(infosUser?.firstName)?.includes('Mocked')
-            ? (infosUser?.firstName?.split('-Mocked'))
-            : (infosUser?.firstName)}
+            {datas && <span><Bienvenue>Bonjour</Bienvenue> {JSON.stringify(userName.firstName)?.includes('Mocked')
+            ? (userName.firstName.split('-Mocked'))
+            : (userName.firstName)}
             </span>}      
             </UserName>
         </UserCard>
+        <BarChart />
+
     </MainProfil>
 }
 
