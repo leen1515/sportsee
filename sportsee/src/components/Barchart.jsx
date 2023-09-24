@@ -7,7 +7,8 @@ function BarChart() {
         console.log("7 datas", datas?.activitiesDatas?.sessions)
     return (
         <>
-            <svg width="825"
+            <svg id="barchartSvg" 
+                width="825"
                 height="320"
                 viewBox="0 0 825 320"
             >
