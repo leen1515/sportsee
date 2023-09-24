@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useContext } from 'react';
 import { datasContext } from '../../routes/GetRoutes';
 import BarChart from '../../components/Barchart';
+import Linechart from '../../components/Linechart';
 
 const MainProfil = styled.main`
     position:absolute;
@@ -36,7 +37,7 @@ function Profil() {
             </UserName>
         </UserCard>
         <BarChart />
-
+        <Linechart />
     </MainProfil>
 }
 

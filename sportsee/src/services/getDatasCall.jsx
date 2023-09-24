@@ -49,13 +49,12 @@ export async function getDatasSection(mock, userId, apiCall) {
 
     const getDatasAverage = () => {
         const { userId, sessions } = apiCall? averageDatas.data: averageDatas;
-        console.log("user info", sessions);
+        console.log("user info average", sessions);
 
         const getAverageSession = () => {
-            const { day, sessionLength } = sessions;
-            console.log("sessions", sessions);
-            return { day, sessionLength }
+            return sessions?.map(({ day, sessionLength }, i) => ({day, sessionLength }));
         }
+        console.log('average 55', getAverageSession());
         return { userId, sessions: getAverageSession() };
     }
 

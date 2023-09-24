@@ -13,7 +13,7 @@ function Linechart() {
                 viewBox="0 0 500 500"
                 style={{ backgroundColor: '#FF0000' }}
             >
-                 <text x="32" y="50" fill="#ffffff87" fontSize="15">
+                 <text x="32" y="50" fill="#ffffff87" fontSize="20px">
                     Durée moyenne des sessions
                 </text>
                 {datas && (

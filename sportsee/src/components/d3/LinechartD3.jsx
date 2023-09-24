@@ -44,7 +44,8 @@ function LineChartD3({ data }) {
         .call(d3.axisBottom(x)
         .tickValues(uniqueDays)
         .tickFormat((d, i) => days[i]).tickSize(0))
-        .selectAll(".domain")
+        
+        xAxis.selectAll(".domain")
         .attr('opacity', 0);
 
         graphic.append("g")
@@ -52,7 +53,7 @@ function LineChartD3({ data }) {
             .selectAll(".domain")
             .attr('opacity', 0);
         
-        xAxis.selectAll("text")
+        xAxis.selectAll(".tick text")
             .attr("fill", "#ffffff")
             .attr("font-size", "12px");  
         
