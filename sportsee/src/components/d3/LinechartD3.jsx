@@ -16,6 +16,8 @@ function LineChartD3({ data }) {
         const graphic = svg.append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`)
             .style("background-color", "rgb(255, 0, 0)");
+        
+        graphic.selectAll('*').remove();
 
         const x = d3.scaleBand()
             .domain(uniqueDays)

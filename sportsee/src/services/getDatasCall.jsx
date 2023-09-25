@@ -60,21 +60,17 @@ export async function getDatasSection(mock, userId, apiCall) {
 
     const getDatasUserPerformance = () => {
         const { userId, kind, data } = apiCall? performancesDatas.data: performancesDatas;
-        console.log("user info", kind, data);
-
-        const getPerformanceKind = () => {
-            const { k1, k2, k3, k4, k5, k6 } = kind;
-            console.log("kind", kind);
-            return { k1, k2, k3, k4, k5, k6 }
-        }
+        console.log("user info 63 userperformance", kind, data);
 
         const getPerformanceKindData = () => {
-            const { value, kind } = data;
-            console.log("data", data);
-            return { value, kind }
+            return data?.map((d) => {
+                const { value, kind } = d;
+                console.log("data performance", d);
+                return { value, kind }
+            });
         }
-
-        return { userId, kind: getPerformanceKind(), data: getPerformanceKindData() };
+        console.log("performance kind", kind);
+        return { userId, kind: kind, data: getPerformanceKindData() };
     }
 
     return { userDatas: getDatasUserInfos(), activitiesDatas: getDatasActivities(), averageDatas: getDatasAverage(), performancesDatas: getDatasUserPerformance()};
