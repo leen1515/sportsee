@@ -5,6 +5,7 @@ import BarChart from '../../components/Barchart';
 import Linechart from '../../components/Linechart';
 import Radarchart from '../../components/Radarchart';
 import Radialchart from '../../components/Radialchart';
+import CardsInfos from '../../components/CardsInfos';
 
 const MainProfil = styled.main`
     position:absolute;
@@ -42,6 +43,7 @@ function Profil() {
         <Linechart />
         <Radarchart />
         <Radialchart/>
+        <CardsInfos/>
     </MainProfil>
 }
 
