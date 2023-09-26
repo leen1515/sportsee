@@ -70,7 +70,7 @@ export async function getDatasSection(mock, userId, apiCall) {
             });
         }
         console.log("performance kind", kind);
-        return { userId, kind: kind, data: getPerformanceKindData() };
+        return { userId, kind: kind, dataPerformance: getPerformanceKindData() };
     }
 
     return { userDatas: getDatasUserInfos(), activitiesDatas: getDatasActivities(), averageDatas: getDatasAverage(), performancesDatas: getDatasUserPerformance()};

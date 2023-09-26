@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import * as d3 from 'd3';
 
-function RadarChart({ data }) {
+function RadarChart({ datas }) {
     const dataFrenchKind = {
         "1": "Cardio",
         "2": "Energie",
@@ -19,77 +19,78 @@ function RadarChart({ data }) {
         if (kind === 4) return 2;  // "Force"
         if (kind === 5) return 1;  // "Vitesse"
     };
-
     useEffect(() => {
-      if (!data) return;
-      const svg = d3.select("#radarchartSvg");
-      svg.selectAll('*').remove();
+        console.log("22 radar chart", datas?.dataPerformance);
 
-      const width = 500;
-      const height = 500;
-      const radius = Math.min(width, height) / 2 - 40;
-      const numberOfSides = data?.data.length;
-      const angle = 2 * Math.PI / numberOfSides;
+        if (!datas) return;
+        const svg = d3.select("#radarchartSvg");
+        svg.selectAll('*').remove();
 
-      const maxValue = d3.max(data?.data, d => d.value);
-      const rScale = d3.scaleLinear().domain([0, maxValue]).range([0, radius]);
+        const width = 500;
+        const height = 500;
+        const radius = Math.min(width, height) / 2 - 40;
+        const numberOfSides = datas?.dataPerformance.length;
+        const angle = 2 * Math.PI / numberOfSides;
 
-      for (let i = 1; i <= 5; i++) {
-          const currentRadius = i * (radius / 5);
-          const lineCoordinates = Array.from({ length: numberOfSides + 1 }).map(
-              (_, j) => ({
-                  x: width / 2 + currentRadius * Math.sin(j * angle ),
-                  y: height / 2 - currentRadius * Math.cos(j * angle )
-              })
-          );
+        const maxValue = d3.max(datas?.dataPerformance, (d) => d?.value);
+        const rScale = d3.scaleLinear().domain([0, maxValue]).range([0, radius]);
 
-          svg
-              .append('path')
-              .datum(lineCoordinates)
-              .attr('d', d3.line().x((d) => d.x).y((d) => d.y))
-              .attr('fill', 'none')
-              .attr('stroke', 'grey')
-              .attr('stroke-width', 0.5);
-      }
+        for (let i = 1; i <= 5; i++) {
+            const currentRadius = i * (radius / 5);
+            const lineCoordinates = Array.from({ length: numberOfSides + 1 }).map(
+                (_, j) => ({
+                    x: width / 2 + currentRadius * Math.sin(j * angle),
+                    y: height / 2 - currentRadius * Math.cos(j * angle)
+                })
+            );
 
-      const dataPoints = data?.data.map(value => {
-          let adjustedIndex = adjustIndex(value.kind);
-          return {
-              x: width / 2 + rScale(value.value) * Math.sin(adjustedIndex * angle ),
-              y: height / 2 - rScale(value.value) * Math.cos(adjustedIndex * angle )
-          };
-      });
-      dataPoints.push(dataPoints[0]);
+            svg
+                .append('path')
+                .datum(lineCoordinates)
+                .attr('d', d3.line().x((d) => d.x).y((d) => d.y))
+                .attr('fill', 'none')
+                .attr('stroke', 'grey')
+                .attr('stroke-width', 0.5);
+        }
 
-      svg
-          .append('path')
-          .datum(dataPoints)
-          .attr('d', d3.line().x((d) => d.x).y((d) => d.y))
-          .attr('fill', 'rgba(100, 200, 255, 0.5)')
-          .attr('stroke', 'blue')
-          .attr('stroke-width', 1.5);
+        const dataPoints = datas?.dataPerformance?.map(value => {
+            let adjustedIndex = adjustIndex(value.kind);
+            return {
+                x: width / 2 + rScale(value.value) * Math.sin(adjustedIndex * angle),
+                y: height / 2 - rScale(value.value) * Math.cos(adjustedIndex * angle)
+            };
+        });
+        dataPoints.push(dataPoints[0]);
 
-      const textOffset = 15;
+        svg
+            .append('path')
+            .datum(dataPoints)
+            .attr('d', d3.line().x((d) => d.x).y((d) => d.y))
+            .attr('fill', 'rgba(100, 200, 255, 0.5)')
+            .attr('stroke', 'blue')
+            .attr('stroke-width', 1.5);
 
-      data?.data.forEach(value => {
-          let adjustedIndex = adjustIndex(value.kind);
-          const angleForText = adjustedIndex * angle;
+        const textOffset = 15;
 
-          const textX = width / 2 + (radius + textOffset) * Math.sin(angleForText);
-          const textY = height / 2 - (radius + textOffset) * Math.cos(angleForText);
+        datas?.dataPerformance.forEach(value => {
+            let adjustedIndex = adjustIndex(value.kind);
+            const angleForText = adjustedIndex * angle;
 
-          svg.append('text')
-              .attr('x', textX)
-              .attr('y', textY)
-              .attr('text-anchor', 'middle')
-              .attr('alignment-baseline', 'middle')
-              .attr('font-size', '12px')
-              .attr('fill', 'black')
-              .text(dataFrenchKind[value.kind]);
-      });
+            const textX = width / 2 + (radius + textOffset) * Math.sin(angleForText);
+            const textY = height / 2 - (radius + textOffset) * Math.cos(angleForText);
+
+            svg.append('text')
+                .attr('x', textX)
+                .attr('y', textY)
+                .attr('text-anchor', 'middle')
+                .attr('alignment-baseline', 'middle')
+                .attr('font-size', '12px')
+                .attr('fill', 'black')
+                .text(dataFrenchKind[value.kind]);
+        });
 
 
-    }, [data]);
+    }, [datas]);
 
     return (<></>);
 }

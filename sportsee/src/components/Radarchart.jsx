@@ -1,4 +1,4 @@
-import RadialchartD3 from './d3/RadarchartD3';
+import RadarchartD3 from './d3/RadarchartD3';
 import { useContext } from 'react';
 import { datasContext } from '../routes/GetRoutes';
 
@@ -13,7 +13,7 @@ function Radarchart() {
         style={{ backgroundColor: "#282D30"}}
     >
         {datas && (
-            <RadialchartD3 data={ datas?.performancesDatas } />
+            <RadarchartD3 datas ={ datas?.performancesDatas } />
         )}
     </svg></>)
 }
