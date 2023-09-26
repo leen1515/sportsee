@@ -4,6 +4,7 @@ import { datasContext } from '../../routes/GetRoutes';
 import BarChart from '../../components/Barchart';
 import Linechart from '../../components/Linechart';
 import Radarchart from '../../components/Radarchart';
+import Radialchart from '../../components/Radialchart';
 
 const MainProfil = styled.main`
     position:absolute;
@@ -40,6 +41,7 @@ function Profil() {
         <BarChart />
         <Linechart />
         <Radarchart />
+        <Radialchart/>
     </MainProfil>
 }
 
