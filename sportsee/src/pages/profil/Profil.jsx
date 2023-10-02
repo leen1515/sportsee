@@ -33,9 +33,7 @@ function Profil() {
     return <MainProfil>
         <UserCard>
             <UserName>
-            {datas && <span><Bienvenue>Bonjour</Bienvenue> {JSON.stringify(userName.firstName)?.includes('Mocked')
-            ? (userName.firstName.split('-Mocked'))
-            : (userName.firstName)}
+            {datas && <span><Bienvenue>Bonjour</Bienvenue> {(userName.firstName)}
             </span>}      
             </UserName>
         </UserCard>

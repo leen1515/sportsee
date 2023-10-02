@@ -10,29 +10,34 @@ export const datasContext = createContext(null);
 function GetRoutes(){
     const [datas, setDatas] = useState(null);
     const [isDataLoading, setDataLoading] = useState(true);
-    const [apiStatut, setApiStatut] = useState(false);
+    const [apiStatut, setApiStatut] = useState(true);
     const [idUserSelected, setIdUserSelected] = useState(12);
 
     useEffect(() => {
-        if(!apiStatut){ 
-            return async()=> { 
-            try{setDatas(await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', parseInt(idUserSelected)))}
-            catch (err) {
-                console.log(err);
-                } finally {
-                setDataLoading(false);
-            ;
-        }}
-} else {
-    return async()=> { 
-        try{setDatas(await getDatasSection(undefined, parseInt(idUserSelected), apiStatut))}
-        catch (err) {
-            console.log(err);
+        const fetchData = async () => {
+            try {
+                let data = await getDatasSection(undefined, parseInt(idUserSelected), apiStatut);
+                if (data === null || data === undefined) {
+                    setApiStatut(false);
+                    throw new Error('API returned null or undefined');
+                } else {setApiStatut(true);}
+                setDatas(data);
+            } catch (err) {
+                console.log('Error fetching from API:', err);
+                try {
+                    let mockedData = await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', parseInt(idUserSelected), apiStatut);
+                    setDatas(mockedData);
+                    setApiStatut(false); 
+                } catch (mockedErr) {
+                    console.log('Error fetching mocked data:', mockedErr);
+                }
             } finally {
-            setDataLoading(false);
-    }}
-}
-}, []);
+                setDataLoading(false);
+            }
+        }
+    
+        fetchData();
+    }, [idUserSelected, apiStatut]); 
 
 console.log('le fichier route 37', datas?.activitiesDatas)
 
