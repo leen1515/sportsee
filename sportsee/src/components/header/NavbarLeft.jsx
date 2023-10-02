@@ -5,11 +5,10 @@ import swim from '../../svg/swim.svg';
 import yoga from '../../svg/yoga.svg';
 
 const MenuLeft = styled.aside`
-    top:-90px;
     display:flex;
     flex-direction:column;
     justify-content:center;
-    position: relative;
+    position: fixed;
     height: 100vh;
     background-color: #020203;
     width:117px;

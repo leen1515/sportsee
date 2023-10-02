@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import sportSeeIcon from '../../svg/logo.svg';
 
 const Navbar = styled.ul`
-    position:relative;
+    position:fixed;
+    left:0;
+    width:100%;
     z-index: 2;
     display: flex;
     justify-content: flex-start;
