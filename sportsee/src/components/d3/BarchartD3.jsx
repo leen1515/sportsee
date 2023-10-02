@@ -10,21 +10,25 @@ function BarChartD3({ data }) {
         const max = d3.max(data, (c) => c.calories);;
         const lastTenDays = data.slice(-10);
 
+        const chartWidth = 825 * 0.83; // 80% of 825 is 660
+        const chartHeight = 320 * 0.44; // Roughly 44% of 320 is 140
+        
         const x = d3
             .scaleBand()
             .domain(data.map((d) => d.day))
-            .range([0, 685])
+            .range([0, chartWidth])
             .paddingInner(0.95);
-
+        
         const y = d3
             .scaleLinear()
             .domain([0, max])
-            .range([140, 0]);
-
+            .range([chartHeight, 0]);
+        
         const yKilo = d3
             .scaleLinear()
             .domain([minKilo, maxKilo])
-            .range([140, 0]);
+            .range([chartHeight, 0]);
+        
 
         const xAxis = d3.axisBottom(x)
             .tickSize(0)
@@ -164,39 +168,41 @@ function BarChartD3({ data }) {
 
         const interactiveZones = graphic.append("g").attr("class", "interactive-zones");
 
-        const infosBulle = d3.select('body')
-            .append('div')
-            .attr('class', 'infosBulle')
-            .style('position', 'absolute')
-            .style('background-color', '#E60000')
-            .style('color', 'white')
-            .style('padding', '20px 5px')
-            .style('font-size', '10px')
-            .style('font-weight', 'normal')
-            .style('text-align', 'center')
-            .style('width', 'fit-content')
-            .style('height', 'fit-content')
-            .style('box-shadow', '0 0 5px #BDBDBD')
-            .style('pointer-events', 'none');
+        let infosBulle = d3.select('.infosBulle');
+        if (infosBulle.empty()) {
+            infosBulle = d3.select('body')
+                .append('div')
+                .attr('class', 'infosBulle')
+                .style('position', 'absolute')
+                .style('background-color', '#E60000')
+                .style('color', 'white')
+                .style('padding', '20px 5px')
+                .style('font-size', '10px')
+                .style('font-weight', 'normal')
+                .style('text-align', 'center')
+                .style('width', 'fit-content')
+                .style('height', 'fit-content')
+                .style('box-shadow', '0 0 5px #BDBDBD')
+                .style('pointer-events', 'none')
+                .style('opacity', 0);
+        }
 
         const mouseover = function (event, d) {
             infosBulle
                 .transition()
                 .duration(100)
-                .style('opacity', 1)
+                .style('opacity', 1);
             infosBulle
                 .html(d.kilogram + " kg  <br><br><br>" + d.calories + " Kcal ")
-                .style('left', (event.x) + 'px')
-                .style('top', (event.y) + 'px')
-
+                .style('left', (event.pageX) + 'px')
+                .style('top', (event.pageY) + 'px');
             d3.select(this).attr('opacity', 0.3);
-
         };
-
+        
         const mousemove = (event, d) => {
             infosBulle
-                .style('left', (event.x) + 'px')
-                .style('top', (event.y) + 'px')
+                .style('left', (event.pageX) + 'px')
+                .style('top', (event.pageY) + 'px')
             d3.select(this).attr('opacity', 0.5);
 
         };

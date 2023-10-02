@@ -12,6 +12,16 @@ const MainProfil = styled.main`
     top:91px;
     left:117px;
 `
+
+const MainGroup = styled.div`
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    width:100%;
+    height:100%;
+`
+
 const UserCard = styled.div`
 
 `
@@ -28,7 +38,6 @@ const Bienvenue = styled.p`
 function Profil() {
     const {datas} = useContext(datasContext);
     const userName = {firstName : datas?.userDatas.userInfos.firstName, lastName : datas?.userDatas.userInfos.lastName}
-    console.log("dataaaa PRofil", datas?.userDatas.userInfos)
 
     return <MainProfil>
         <UserCard>
@@ -37,12 +46,14 @@ function Profil() {
             </span>}      
             </UserName>
         </UserCard>
-        <BarChart />
-        <Linechart />
-        <Radarchart />
-        <Radialchart/>
+        <MainGroup>
+            <BarChart />
+            <Linechart />
+            <Radarchart />
+            <Radialchart/>
+        </MainGroup>
         <CardsInfos/>
-    </MainProfil>
+    </MainProfil>;
 }
 
 export default Profil;

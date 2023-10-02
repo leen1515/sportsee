@@ -1,17 +1,23 @@
 import { useContext } from 'react';
 import { datasContext } from '../routes/GetRoutes';
 import BarChartD3 from './d3/BarchartD3';
+import styled from 'styled-components';
+
+const BarchartContainer = styled.div`
+    width: 100%;
+`;
 
 function BarChart() {
-        const { datas } = useContext(datasContext);
-        console.log("7 datas", datas?.activitiesDatas?.sessions)
+    const { datas } = useContext(datasContext);
+    console.log("7 datas", datas?.activitiesDatas?.sessions)
     return (
-        <>
-            <svg id="barchartSvg" 
-                width="825"
+        <BarchartContainer>
+            <svg id="barchartSvg"
+                width="100%"
                 height="320"
                 viewBox="0 0 825 320"
-            >
+                fill = "#FBFBFB"
+                preserveAspectRatio="xMinYMin meet">
                 <text x="32" y="50" fill="#20253A" fontSize="15">
                     Activité quotidienne
                 </text>
@@ -24,10 +30,10 @@ function BarChart() {
                     Calories Brulées (kCal)
                 </text>
                 {datas && (
-                    <BarChartD3 data={ datas?.activitiesDatas?.sessions} />
+                    <BarChartD3 data={datas?.activitiesDatas?.sessions} />
                 )}
             </svg>
-        </>
+        </BarchartContainer>
     );
 }
 
