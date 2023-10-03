@@ -20,15 +20,14 @@ function RadarChart({ datas }) {
         if (kind === 5) return 1;  // "Vitesse"
     };
     useEffect(() => {
-        console.log("22 radar chart", datas?.dataPerformance);
 
         if (!datas) return;
         const svg = d3.select("#radarchartSvg");
         svg.selectAll('*').remove();
 
-        const width = 500;
+        const width = 500 ;
         const height = 500;
-        const radius = Math.min(width, height) / 2 - 40;
+        const radius = Math.min(width, height) / 2 - 80;
         const numberOfSides = datas?.dataPerformance.length;
         const angle = 2 * Math.PI / numberOfSides;
 
@@ -49,8 +48,8 @@ function RadarChart({ datas }) {
                 .datum(lineCoordinates)
                 .attr('d', d3.line().x((d) => d.x).y((d) => d.y))
                 .attr('fill', 'none')
-                .attr('stroke', 'grey')
-                .attr('stroke-width', 0.5);
+                .attr('stroke', 'white')
+                .attr('stroke-width', 2);
         }
 
         const dataPoints = datas?.dataPerformance?.map(value => {
@@ -66,11 +65,11 @@ function RadarChart({ datas }) {
             .append('path')
             .datum(dataPoints)
             .attr('d', d3.line().x((d) => d.x).y((d) => d.y))
-            .attr('fill', 'rgba(100, 200, 255, 0.5)')
+            .attr('fill', 'rgba(255, 0, 0, 0.5)')
             .attr('stroke', 'blue')
-            .attr('stroke-width', 1.5);
+            .attr('stroke-width', 0);
 
-        const textOffset = 15;
+        const textOffset = 35;
 
         datas?.dataPerformance.forEach(value => {
             let adjustedIndex = adjustIndex(value.kind);
@@ -84,8 +83,8 @@ function RadarChart({ datas }) {
                 .attr('y', textY)
                 .attr('text-anchor', 'middle')
                 .attr('alignment-baseline', 'middle')
-                .attr('font-size', '12px')
-                .attr('fill', 'black')
+                .attr('font-size', '25px')
+                .attr('fill', 'white')
                 .text(dataFrenchKind[value.kind]);
         });
 
