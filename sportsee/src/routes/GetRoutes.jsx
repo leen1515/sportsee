@@ -16,16 +16,17 @@ function GetRoutes(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let data = await getDatasSection(undefined, parseInt(idUserSelected), apiStatut);
+                let data = await getDatasSection(undefined, parseInt(idUserSelected), true);
                 if (data === null || data === undefined) {
                     setApiStatut(false);
                     throw new Error('API returned null or undefined');
-                } else {setApiStatut(true);}
+                } else {
+                setApiStatut(true);}
                 setDatas(data);
             } catch (err) {
                 console.log('Error fetching from API:', err);
                 try {
-                    let mockedData = await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', parseInt(idUserSelected), apiStatut);
+                    let mockedData = await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', parseInt(idUserSelected), false);
                     setDatas(mockedData);
                     setApiStatut(false); 
                 } catch (mockedErr) {

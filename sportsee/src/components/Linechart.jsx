@@ -1,27 +1,36 @@
 import LinechartD3 from './d3/LinechartD3';
 import { useContext } from 'react';
 import { datasContext } from '../routes/GetRoutes';
+import styled from 'styled-components';
+
+const LinechartContainer = styled.div`
+    width: 20%;
+`;
+
 
 function Linechart() {
         const { datas } = useContext(datasContext);
-        console.log("7 average fichier linechart", datas?.averageDatas?.sessions)
     return (
-        <>
+        <LinechartContainer>
             <svg id = "linechartSvg" 
-                width="500px"
-                height="400px"
+                width="100%"
+                height="263px"
                 viewBox="0 0 500 500"
-                style={{ backgroundColor: '#FF0000' }}
+                style={{ backgroundColor: '#FF0000', borderRadius: "8px"}}
             >
-                 <text x="32" y="50" fill="#ffffff87" fontSize="20px">
-                    Durée moyenne des sessions
-                </text>
                 {datas && (
                     <LinechartD3 data={ datas?.averageDatas?.sessions } />
                 )}
+                <text width= "20px" x="32" y="100" fill="#ffffff87" fontSize="30px">
+                    Durée moyenne des
+                </text>
+                <text width= "20px" x="32" y="140" fill="#ffffff87" fontSize="30px">
+                    sessions
+                </text>
             </svg>
-        </>
+        </LinechartContainer>
     );
 }
+
 
 export default Linechart;

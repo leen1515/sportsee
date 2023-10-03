@@ -9,7 +9,7 @@ const Navbar = styled.ul`
     z-index: 2;
     display: flex;
     justify-content: flex-start;
-    column-gap:calc(25% - 250px);
+    column-gap:calc(20% - 250px);
     flex-flow: row nowrap;
     align-items: center;
     list-style: none;
