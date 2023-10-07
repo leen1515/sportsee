@@ -11,6 +11,10 @@ import { useEffect } from 'react';
 
 const MainProfil = styled.main`
     position:absolute;
+    display:flex;
+    flex-direction:row;
+    width: calc(100% - 117px);
+    height:100%;
     top:91px;
     left:117px;
 `
