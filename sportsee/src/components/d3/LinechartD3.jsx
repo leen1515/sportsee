@@ -1,11 +1,15 @@
 import * as d3 from 'd3';
-import { useEffect } from 'react';
+import { useEffect, useRef} from 'react';
 
 function LineChartD3({ data }) {
+    const svgRef = useRef(null);
 
 
     useEffect(() => {
-        const svg = d3.select('#linechartSvg');
+        
+        if (!data || !svgRef.current ) return;
+        const svg = d3.select(svgRef.current);
+        svg.selectAll('*').remove();
 
         const uniqueDays = ["L", "Ma", "Me", "J", "V", "S", "D"];
         const days = ["L", "M", "M", "J", "V", "S", "D"];
@@ -172,8 +176,8 @@ function LineChartD3({ data }) {
 
     }, [data]);
 
-    return (<></>
-    );
+    return <svg ref={svgRef}></svg>;
+    
 }
 
 export default LineChartD3;

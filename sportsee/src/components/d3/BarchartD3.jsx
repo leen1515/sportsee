@@ -1,10 +1,20 @@
 import * as d3 from 'd3';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 
 function BarChartD3({ data }) {
+    const svgRef = useRef(null);
 
     useEffect(() => {
+        if (!data || !svgRef.current ) return;
+        const svg = d3.select(svgRef.current)
+        .append('g')
+        .attr('width', 680)
+        .attr('height', 150)
+        .attr('transform', 'translate(50, 110)');
+
+        svg.selectAll('*').remove();
+
         const minKilo = d3.min(data, (k) => k.kilogram);
         const maxKilo = d3.max(data, (k) => k.kilogram);
         const max = d3.max(data, (c) => c.calories);;
@@ -37,26 +47,18 @@ function BarChartD3({ data }) {
 
         const yAxis = d3.axisRight(yKilo).ticks(3);
 
-        const graphic = d3
-            .select("#barchartSvg")
-            .append('g')
-            .attr('width', 680)
-            .attr('height', 150)
-            .attr('transform', 'translate(50, 110)');
-
-
-        const xGroup = graphic
+        const xGroup = svg
             .append('g')
             .attr('transform', `translate(0, 139)`);
 
-        const yGroup = graphic
+        const yGroup = svg
             .append('g')
             .attr('transform', `translate(700, 0)`);
-        const xGroupMiddle = graphic
+        const xGroupMiddle = svg
             .append('g')
             .attr('transform', `translate(0, 70)`);
 
-        const xGroupTop = graphic.append('g');
+        const xGroupTop = svg.append('g');
 
 
 
@@ -109,13 +111,13 @@ function BarChartD3({ data }) {
             .selectAll('g.tick text')
             .attr('transform', 'translate(20, 0)')
 
-        const groupKilo = graphic
+        const groupKilo = svg
             .append('g')
             .attr('transform', `translate(-6, 0)`)
             .attr('width', 685)
             .attr('height', 140);
 
-        const groupCalories = graphic
+        const groupCalories = svg
             .append('g')
             .attr('transform', `translate(6, 0)`);
 
@@ -156,7 +158,7 @@ function BarChartD3({ data }) {
             .duration(600)
             .attr('y1', (d) => y(d.calories));
 
-        graphic
+        svg
             .append('g')
             .append('rect')
             .attr('transform', `translate(-20, 140)`)
@@ -164,9 +166,9 @@ function BarChartD3({ data }) {
             .attr('height', 5)
             .attr('fill', '#FBFBFB');
 
-        // Animation to the graphic to display an infosbulle with kg and calories
+        // Animation to the svg to display an infosbulle with kg and calories
 
-        const interactiveZones = graphic.append("g").attr("class", "interactive-zones");
+        const interactiveZones = svg.append("g").attr("class", "interactive-zones");
 
         let infosBulle = d3.select('.infosBulle');
         if (infosBulle.empty()) {
@@ -229,7 +231,8 @@ function BarChartD3({ data }) {
             .on('mousemove', mousemove)
             .on('mouseleave', mouseleave);
     }, [data]);
-    return <></>;
+    return <svg ref={svgRef}></svg>;
 }
+
 
 export default BarChartD3;

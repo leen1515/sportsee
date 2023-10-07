@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 function RadarChart({ datas }) {
+    const svgRef = useRef(null);
     const dataFrenchKind = {
         "1": "Cardio",
         "2": "Energie",
@@ -20,9 +21,8 @@ function RadarChart({ datas }) {
         if (kind === 5) return 1;  // "Vitesse"
     };
     useEffect(() => {
-
-        if (!datas) return;
-        const svg = d3.select("#radarchartSvg");
+        if (!datas || !svgRef.current ) return;
+        const svg = d3.select(svgRef.current)
         svg.selectAll('*').remove();
 
         const width = 500 ;
@@ -91,7 +91,7 @@ function RadarChart({ datas }) {
 
     }, [datas]);
 
-    return (<></>);
+    return <svg ref={svgRef}></svg>;
 }
 
 export default RadarChart;
