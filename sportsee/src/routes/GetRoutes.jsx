@@ -3,14 +3,16 @@ import Home from '../pages/home/Home';
 import Profil from '../pages/profil/Profil';
 import { createContext, useEffect, useState } from "react";
 import { getDatasSection } from '../services/getDatasCall';
+import Loading from '../components/Loading';
 
 export const datasContext = createContext(null);
 
 function GetRoutes(){
     const [datas, setDatas] = useState(null);
     const [isDataLoading, setDataLoading] = useState(true);
-    const [apiStatut, setApiStatut] = useState(true);
+    const [apiStatut, setApiStatut] = useState(false);
     const [idUserSelected, setIdUserSelected] = useState(12);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,7 +29,9 @@ function GetRoutes(){
                 setDatas(data);
             } catch (err) {
                 console.log('Error fetching data:', err);
-            } finally {
+                setError(err.message || "An error occurred");
+            } 
+            finally {
                 setDataLoading(false);
             }
         }
@@ -42,13 +46,13 @@ function GetRoutes(){
     const toggleAPIMode = () => {
         setApiStatut(prev => !prev);
     }
-
+    if (isDataLoading) return <Loading />;
     return !isDataLoading && (
         <datasContext.Provider value={{datas, api: apiStatut, choiceId, toggleAPIMode}}>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/profil/" element={<Home />} />
+                <Route path="/" element={<Home messageError = {error}/>} />
                 <Route path="/profil/:userId" element={<Profil />} />
+                <Route path="/profil/" element={<Home messageError = {error} />} />
             </Routes>
         </datasContext.Provider>
     );

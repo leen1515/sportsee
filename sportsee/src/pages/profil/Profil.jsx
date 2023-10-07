@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 const MainProfil = styled.main`
     position:absolute;
     display:flex;
-    flex-direction:row;
+    flex-direction:column;
     width: calc(100% - 117px);
     height:100%;
     top:91px;
@@ -29,11 +29,13 @@ const MainGroup = styled.div`
 `
 
 const UserCard = styled.div`
-
+width:100%;
 `
-const UserName = styled.h2`
+const UserName = styled.div`
     color: red;
     font-size: 50px;
+    width:100%;
+    white-space:nowrap;
 `
 
 const Bienvenue = styled.p`
