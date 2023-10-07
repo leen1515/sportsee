@@ -48,7 +48,7 @@ const DataImage = styled.img`
     height: 100%;  
     padding: 10px 20px;
     border-radius: 10px;
-    background-color: ${props => props.bgColor || 'transparent'};
+    background-color: ${props => props.$bgcolor || 'transparent'};
 
 `;
 
@@ -69,7 +69,7 @@ function KeyDataItem({ icon, altText, value, label, color }) {
     return (
         <Container>
             <InnerContainer>
-                <DataImage bgColor={color} src={icon} alt={altText} />
+                <DataImage $bgcolor={color} src={icon} alt={altText} />
                 <ColumnContainer>
 
                     <ValueText>{value}</ValueText>

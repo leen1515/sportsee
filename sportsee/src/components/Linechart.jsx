@@ -21,10 +21,10 @@ function Linechart() {
                 {datas && (
                     <LinechartD3 data={ datas?.averageDatas?.sessions } />
                 )}
-                <text width= "20px" x="32" y="100" fill="#ffffff87" fontSize="30px">
+                <text x="32" y="100" fill="#ffffff87" fontSize="30px">
                     Durée moyenne des
                 </text>
-                <text width= "20px" x="32" y="140" fill="#ffffff87" fontSize="30px">
+                <text x="32" y="140" fill="#ffffff87" fontSize="30px">
                     sessions
                 </text>
             </svg>

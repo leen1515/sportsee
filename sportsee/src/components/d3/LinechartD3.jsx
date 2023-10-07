@@ -1,13 +1,15 @@
 import * as d3 from 'd3';
-import { useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 
 function LineChartD3({ data }) {
     const svgRef = useRef(null);
 
-
     useEffect(() => {
-        
-        if (!data || !svgRef.current ) return;
+        if (!data || !svgRef.current) return;
+
+        const validData = data.filter(d => !isNaN(d.sessionLength) && typeof d.day === 'number');
+        const extendedData = [...validData, { ...validData[validData.length - 1] }];
+
         const svg = d3.select(svgRef.current);
         svg.selectAll('*').remove();
 
@@ -15,9 +17,6 @@ function LineChartD3({ data }) {
         const days = ["L", "M", "M", "J", "V", "S", "D"];
 
         const extendedPixels = 60;
-        const lastDataPoint = data[data.length - 1];
-        data.push({ ...lastDataPoint });
-
         const margin = { top: 100, right: 40, bottom: 0, left: -40 };
         const width = 520 - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
@@ -26,20 +25,18 @@ function LineChartD3({ data }) {
             .attr("transform", `translate(${margin.left}, ${margin.top})`)
             .style("background-color", "rgb(255, 0, 0)");
 
-        graphic.selectAll('*').remove();
-
         const x = d3.scaleBand()
             .domain(uniqueDays)
             .range([0, width + margin.right])
             .padding(0.1);
 
         const y = d3.scaleLinear()
-            .domain([0, d3.max(data, d => d.sessionLength)])
+            .domain([0, d3.max(extendedData, d => d.sessionLength)])
             .range([height, 0]);
 
         const line = d3.line()
             .x((d, i) => {
-                if (i === data.length - 1) {
+                if (i === extendedData.length - 1) {
                     return x(uniqueDays[uniqueDays.length - 1]) + x.bandwidth() / 2 + extendedPixels;
                 } else if (i === 0) {
                     return x(uniqueDays[0]) - extendedPixels + x.bandwidth() / 2;
@@ -64,7 +61,7 @@ function LineChartD3({ data }) {
             .attr("width", x.bandwidth() + 40)
             .attr("height", 708)
             .attr("fill", "#00000008");
-            
+
         const gradient = svg.append("defs")
             .append("linearGradient")
             .attr("id", "lineGradient")
@@ -83,7 +80,7 @@ function LineChartD3({ data }) {
             .attr("stop-opacity", 1);
 
         graphic.append("path")
-            .data([data])
+            .data([extendedData])
             .attr("class", "line")
             .attr("d", line)
             .attr("stroke", "url(#lineGradient)")
@@ -94,7 +91,7 @@ function LineChartD3({ data }) {
             .attr("transform", `translate(0, ${height + 50})`)
             .call(d3.axisBottom(x)
                 .tickValues(uniqueDays)
-                .tickFormat((d, i) => days[i]).tickSize(0))
+                .tickFormat((d, i) => days[i]).tickSize(0));
 
         xAxis.selectAll(".domain")
             .attr('opacity', 0);
@@ -112,21 +109,30 @@ function LineChartD3({ data }) {
             .attr("opacity", 0);
 
         graphic.selectAll(".dot")
-            .data(data)
+            .data(extendedData)
             .enter().append("circle")
             .attr("fill", "white")
             .attr("class", "dot")
-            .attr("cx", (d, i) => x(uniqueDays[i]) + x.bandwidth() / 2)
+            .attr("cx", d => {
+                const dayIndex = d.day - 1;
+                const xValue = x(uniqueDays[dayIndex]);
+                if (xValue === undefined) return 0; 
+                return xValue + x.bandwidth() / 2;
+            })
             .attr("cy", d => y(d.sessionLength))
             .attr("r", 7)
             .attr("opacity", 0);
 
         graphic.selectAll(".interactive-zone")
-            .data(data)
-            .enter()
-            .append("circle")
+            .data(extendedData)
+            .enter().append("circle")
             .attr("class", "interactive-zone")
-            .attr("cx", (d, i) => x(uniqueDays[i]) + x.bandwidth() / 2)
+            .attr("cx", d => {
+                const dayIndex = d.day - 1; 
+                const xValue = x(uniqueDays[dayIndex]);
+                if (xValue === undefined) return 0; 
+                return xValue + x.bandwidth() / 2;
+            })
             .attr("cy", d => y(d.sessionLength))
             .attr("r", 55)
             .attr("fill", "white")
@@ -142,7 +148,7 @@ function LineChartD3({ data }) {
             .style("visibility", "hidden");
 
         function handleMouseOver(event, d) {
-            const dataPoint = d3.select(graphic.selectAll(".dot").nodes()[d.day - 1])
+            const dataPoint = d3.select(graphic.selectAll(".dot").nodes()[d.day - 1]);
             tooltip.transition()
                 .duration(200)
                 .style("visibility", "visible");
@@ -160,7 +166,7 @@ function LineChartD3({ data }) {
         }
 
         function handleMouseOut(event, d) {
-            const dataPoint = d3.select(graphic.selectAll(".dot").nodes()[d.day - 1])
+            const dataPoint = d3.select(graphic.selectAll(".dot").nodes()[d.day - 1]);
             tooltip.transition()
                 .duration(500)
                 .delay(500)
@@ -172,12 +178,9 @@ function LineChartD3({ data }) {
                 .duration(300)
                 .attr("opacity", 0);
         }
-
-
     }, [data]);
 
     return <svg ref={svgRef}></svg>;
-    
 }
 
 export default LineChartD3;
