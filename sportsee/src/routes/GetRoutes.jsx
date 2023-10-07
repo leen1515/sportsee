@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router';
-import Construction from '../pages/Construction';
 import Home from '../pages/home/Home';
 import Profil from '../pages/profil/Profil';
 import { createContext, useEffect, useState } from "react";
@@ -15,23 +14,19 @@ function GetRoutes(){
 
     useEffect(() => {
         const fetchData = async () => {
+            setDataLoading(true);
             try {
-                let data = await getDatasSection(undefined, parseInt(idUserSelected), true);
-                if (data === null || data === undefined) {
-                    setApiStatut(false);
-                    throw new Error('API returned null or undefined');
+                let data;
+
+                if(apiStatut) {
+                    data = await getDatasSection(undefined, parseInt(idUserSelected), true);
                 } else {
-                setApiStatut(true);}
+                    data = await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', parseInt(idUserSelected), false);
+                }
+
                 setDatas(data);
             } catch (err) {
-                console.log('Error fetching from API:', err);
-                try {
-                    let mockedData = await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', parseInt(idUserSelected), false);
-                    setDatas(mockedData);
-                    setApiStatut(false); 
-                } catch (mockedErr) {
-                    console.log('Error fetching mocked data:', mockedErr);
-                }
+                console.log('Error fetching data:', err);
             } finally {
                 setDataLoading(false);
             }
@@ -40,14 +35,23 @@ function GetRoutes(){
         fetchData();
     }, [idUserSelected, apiStatut]); 
 
-console.log('le fichier route 37', datas?.activitiesDatas)
+    const choiceId = (id) => {
+        setIdUserSelected(id);
+    }
 
+    const toggleAPIMode = () => {
+        setApiStatut(prev => !prev);
+    }
 
-    return  !isDataLoading && <datasContext.Provider value = {{datas : datas, api : apiStatut}}><Routes>
-    <Route path="/" element= {<Home/>}/>
-    <Route path="/*" element={<Construction/>}/>
-    <Route path="/profil/" element={<Profil/>} />
-</Routes>
-</datasContext.Provider>
+    return !isDataLoading && (
+        <datasContext.Provider value={{datas, api: apiStatut, choiceId, toggleAPIMode}}>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/profil/" element={<Home />} />
+                <Route path="/profil/:userId" element={<Profil />} />
+            </Routes>
+        </datasContext.Provider>
+    );
 }
+
 export default GetRoutes;

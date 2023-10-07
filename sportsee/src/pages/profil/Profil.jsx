@@ -6,6 +6,8 @@ import Linechart from '../../components/Linechart';
 import Radarchart from '../../components/Radarchart';
 import Radialchart from '../../components/Radialchart';
 import CardsInfos from '../../components/CardsInfos';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const MainProfil = styled.main`
     position:absolute;
@@ -36,7 +38,13 @@ const Bienvenue = styled.p`
 `
 
 function Profil() {
-    const {datas} = useContext(datasContext);
+    const { choiceId, datas } = useContext(datasContext);
+    const { userId } = useParams();
+    
+    useEffect(() => {
+        choiceId(userId);
+    }, [userId, choiceId]);
+
     const userName = {firstName : datas?.userDatas.userInfos.firstName, lastName : datas?.userDatas.userInfos.lastName}
 
     return <MainProfil>
