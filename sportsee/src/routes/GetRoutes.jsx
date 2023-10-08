@@ -11,33 +11,33 @@ function GetRoutes(){
     const [datas, setDatas] = useState(null);
     const [isDataLoading, setDataLoading] = useState(true);
     const [apiStatut, setApiStatut] = useState(false);
-    const [idUserSelected, setIdUserSelected] = useState(12);
+    const [idUserSelected, setIdUserSelected] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        if (!idUserSelected && null);
+        console.log('Fetching data for user:', idUserSelected);
         const fetchData = async () => {
             setDataLoading(true);
             try {
-                let data;
-
-                if(apiStatut) {
-                    data = await getDatasSection(undefined, parseInt(idUserSelected), true);
-                } else {
-                    data = await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', parseInt(idUserSelected), false);
-                }
-
+                if (!idUserSelected) throw new Error("Veuillez sélectionner un utilisateur");
+        
+                const isAPI = apiStatut && idUserSelected;
+                const data = isAPI 
+                    ? await getDatasSection(undefined, idUserSelected, true)
+                    : await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', idUserSelected, false);
+        
                 setDatas(data);
             } catch (err) {
                 console.log('Error fetching data:', err);
                 setError(err.message || "An error occurred");
-            } 
-            finally {
+            } finally {
                 setDataLoading(false);
             }
         }
-    
+        
         fetchData();
-    }, [idUserSelected, apiStatut]); 
+    }, [idUserSelected, apiStatut]);
 
     const choiceId = (id) => {
         setIdUserSelected(id);
@@ -46,16 +46,22 @@ function GetRoutes(){
     const toggleAPIMode = () => {
         setApiStatut(prev => !prev);
     }
-    if (isDataLoading) return <Loading />;
-    return !isDataLoading && (
-        <datasContext.Provider value={{datas, api: apiStatut, choiceId, toggleAPIMode}}>
+
+    
+    return (
+        <datasContext.Provider value={{ datas, api: apiStatut, choiceId, toggleAPIMode }}>
+        {isDataLoading && <Loading />}
             <Routes>
-                <Route path="/" element={<Home messageError = {error}/>} />
-                <Route path="/profil/:userId" element={<Profil />} />
-                <Route path="/profil/" element={<Home messageError = {error} />} />
+                {idUserSelected ? (
+                <Route path="/profil/:userId" element={<Profil />} />)
+                :(<Route path="/profil/:userId" element={<Home messageError={error} />}/>
+                )} 
+                <Route path="/" element={<Home messageError={error} />} />
             </Routes>
+
         </datasContext.Provider>
     );
+
 }
 
 export default GetRoutes;

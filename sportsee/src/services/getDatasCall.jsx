@@ -3,7 +3,7 @@ import { getUserId, getActivity, getAverage, getPerformance } from './Api';
 
 export async function getDatasSection(mock, userId, apiCall) {
     const API_URL = "http://localhost:3001";
-    const datas = !apiCall ? await Axios.get(mock).then(res => res.data) : null;
+    const datas = !apiCall? await Axios.get(mock).then(res => res.data) : null;
     console.log("datas", datas);
     const fetchData = async (apiFunction, dataPath) => {
         if (apiCall) {
@@ -37,7 +37,7 @@ export async function getDatasSection(mock, userId, apiCall) {
             };
         };
 
-        return { keyData: getKeyData(), todayScore: todayScore||score, userInfos: getUserInfos() }
+        return { keyData: getKeyData(), todayScore: todayScore||score, iD: userId, userInfos: getUserInfos() }
     }
 
     const getDatasActivities = () => {
