@@ -62,28 +62,30 @@ function RadialChartD3({ data }) {
             .attr('r', 15)
             .attr('fill', 'red');
 
-        let textElement = svg.append("text")
-            .attr("x", width / 2)
-            .attr("y", height / 2)
+        let textElement = mainGroup.append("text")
+            .attr("x", 0)
+            .attr("y", -40)
             .attr("text-anchor", "middle")
             .attr("font-size", "54px");
 
         textElement.append("tspan")
-            .attr("x", width / 2)
+            .attr("x", 0)
             .attr("dy", "0.35em")
-            .attr("font-size", "74px")
+            .attr("font-size", "60px")
             .text(`${dataAverage}%`);
 
         textElement.append("tspan")
-            .attr("x", width / 2)
-            .attr("dy", "1em")
+            .attr("x", 0)
+            .attr("dy", "1.5em")
             .style("opacity", "0.5")
+            .style("font-size", "40px")
             .text("de votre");
 
         textElement.append("tspan")
-            .attr("x", width / 2)
-            .attr("dy", "1em")
+            .attr("x", 0)
+            .attr("dy", "1.5em")
             .style("opacity", "0.5")
+            .style("font-size", "40px")
             .text("objectif");
 
         return () => {

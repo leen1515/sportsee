@@ -23,7 +23,7 @@ function Radialchart() {
         {datas && (
             <RadialchartD3 data={ datas?.userDatas} />
         )}
-        <text width= "100px" x="20" y="30" fill="#000000" fontSize="30px">
+        <text width= "100px" x="40" y="60" fill="#000000" fontSize="30px">
     Score
 </text>
        
