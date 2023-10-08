@@ -4,7 +4,10 @@ import { datasContext } from '../routes/GetRoutes';
 import styled from 'styled-components';
 
 const LinechartContainer = styled.div`
-    width: 30%;
+    width: 28%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 

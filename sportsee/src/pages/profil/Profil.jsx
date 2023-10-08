@@ -17,8 +17,8 @@ const MainProfil = styled.main`
     max-width: 2000px;
     height:100%;
     max-height: 900px;
-    top:91px;
-    left:187px;
+    top:50px;
+    left:70px;
 `
 const Container = styled.div`
     display:flex;
@@ -41,7 +41,8 @@ const MainGroup = styled.div`
     justify-content:space-between;
     align-items:flex-start;
     flex-wrap:nowrap;
-    width:100%;
+    margin-top: -20px;
+    width:80%;
     height:fit-content;
 `
 
@@ -58,7 +59,7 @@ const UserName = styled.div`
 
 const Bienvenue = styled.p`
     color: #000000;
-    font-size: 35px;
+    font-size: 25px;
     padding:0;
     margin:50px 0 0 0;
 
@@ -68,7 +69,7 @@ const Bienvenue = styled.p`
 `
 const Sentence = styled.p`
     align-self: flex-start;
-    font-size: 15px;
+    font-size: 12px;
     color:black;
     padding:0;
 `

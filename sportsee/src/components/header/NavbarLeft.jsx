@@ -11,7 +11,7 @@ const MenuLeft = styled.aside`
     position: fixed;
     height: 100vh;
     background-color: #020203;
-    width:117px;
+    width:100px;
     z-index:1;
 `
 const NavLeft = styled.nav`
@@ -20,10 +20,11 @@ const NavLeft = styled.nav`
     align-items: center;
     justify-content:center;
     height:100vh;
-    margin:auto;
+    margin:-20px auto 0 auto;
 `
 const IconNavLeft = styled.img`
     flex:0.01;
+    width: 50px;
     padding-bottom: 20px;
 `
 const Copyright = styled.div`

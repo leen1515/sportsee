@@ -17,12 +17,12 @@ const Navbar = styled.ul`
     color: white;
     padding:0 25px;
     margin: auto;
-    height:91px;`
+    height:70px;`
 
 const NavLinkStyle = styled(NavLink)`
     width:250px;
     color: white;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0px;
@@ -30,6 +30,7 @@ const NavLinkStyle = styled(NavLink)`
     text-decoration:none;
 `
 const SportSeeLogo = styled.img`
+    margin-top:10px;
     padding:10px;
     cursor: pointer;
 `
