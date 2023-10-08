@@ -45,24 +45,22 @@ function RadialChartD3({ data }) {
             .attr('stroke', 'red')
             .attr('stroke-width', 20);
 
+        const startX = (radius - 5) * Math.sin(arcAdjustment);
+        const startY = -(radius - 5) * Math.cos(arcAdjustment);
+        const endX = (radius - 5) * Math.sin(scoreScale(dataAverage) - arcAdjustment);
+        const endY = -(radius - 5) * Math.cos(scoreScale(dataAverage) - arcAdjustment);
 
-        const startX = width / 2 + (radius - 5) * Math.sin(arcAdjustment);
-        const startY = height / 2 - (radius - 5) * Math.cos(arcAdjustment);
-        const endX = width / 2 + (radius - 5) * Math.sin(scoreScale(dataAverage) - arcAdjustment);
-        const endY = height / 2 - (radius - 5) * Math.cos(scoreScale(dataAverage) - arcAdjustment);
-
-        svg.append('circle')
+        mainGroup.append('circle')
             .attr('cx', startX)
             .attr('cy', startY)
-            .attr('r', 13)
+            .attr('r', 15)
             .attr('fill', 'red');
 
-        svg.append('circle')
+        mainGroup.append('circle')
             .attr('cx', endX)
             .attr('cy', endY)
-            .attr('r', 13)
+            .attr('r', 15)
             .attr('fill', 'red');
-
 
         let textElement = svg.append("text")
             .attr("x", width / 2)
@@ -81,7 +79,6 @@ function RadialChartD3({ data }) {
             .attr("dy", "1em")
             .style("opacity", "0.5")
             .text("de votre");
-
 
         textElement.append("tspan")
             .attr("x", width / 2)
