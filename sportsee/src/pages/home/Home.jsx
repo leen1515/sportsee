@@ -54,6 +54,7 @@ const ModeDatas = styled.div`
   }`;
 
 function Home({ messageError }) {
+  
   const { api, choiceId } = useContext(datasContext);
   const navigate  = useNavigate();
   const handleUserChoice = (id) => {

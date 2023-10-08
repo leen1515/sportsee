@@ -21,7 +21,7 @@ function GetRoutes(){
         const fetchData = async () => {
             setDataLoading(true);
             try {
-                if (!idUserSelected) throw new Error("Veuillez sélectionner un utilisateur");
+                if (!idUserSelected) throw new Error("Veuillez sélectionner un utilisateur présent");
         
                 const isAPI = apiStatut && idUserSelected;
                 const data = isAPI 
@@ -51,18 +51,24 @@ function GetRoutes(){
     
     return (
         <datasContext.Provider value={{ datas, api: apiStatut, choiceId, toggleAPIMode, idUserSelected }}>
-        {(isDataLoading || !idUserSelected) && <Loading />}
+        {(isDataLoading ) && <Loading />}
             <Routes>
-                {idUserSelected ? (
+                {(idUserSelected && apiStatut && error === "Veuillez sélectionner un utilisateur présent") && (
                 <><Route path="/profil/:userId" element={<Profil />} />
                 <Route path="/profil" element={<Profil />} />
                 <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
                 <Route path="/*" element={<Construction />}/>
-
-                </>)
-                :(<Route path="/profil/:userId" element={<Home messageError={error} />}/>
-                )} 
-                <Route path="/" element={<><Home messageError={error} /><Loading/></>} />
+                </>)}
+                {(idUserSelected && !apiStatut && error === "Veuillez sélectionner un utilisateur présent") && (
+                <><Route path="/profil/:userId" element={<Profil />} />
+                <Route path="/profil" element={<Profil />} />
+                <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
+                <Route path="/*" element={<Construction />}/>
+                </>)}
+                <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
+                <Route path="/profil/:userId" element={<><Home messageError={error} /><Loading /></>} />
+                <Route path="/profil" element={<><Home messageError={error} /><Loading /></>} />
+                <Route path="/*" element={<Construction />} />
             </Routes>
 
         </datasContext.Provider>
