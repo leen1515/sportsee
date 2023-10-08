@@ -4,6 +4,7 @@ import Profil from '../pages/profil/Profil';
 import { createContext, useEffect, useState } from "react";
 import { getDatasSection } from '../services/getDatasCall';
 import Loading from '../components/Loading';
+import Construction from '../pages/construction/Construction';
 
 export const datasContext = createContext(null);
 
@@ -49,14 +50,19 @@ function GetRoutes(){
 
     
     return (
-        <datasContext.Provider value={{ datas, api: apiStatut, choiceId, toggleAPIMode }}>
-        {isDataLoading && <Loading />}
+        <datasContext.Provider value={{ datas, api: apiStatut, choiceId, toggleAPIMode, idUserSelected }}>
+        {(isDataLoading || !idUserSelected) && <Loading />}
             <Routes>
                 {idUserSelected ? (
-                <Route path="/profil/:userId" element={<Profil />} />)
+                <><Route path="/profil/:userId" element={<Profil />} />
+                <Route path="/profil" element={<Profil />} />
+                <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
+                <Route path="/*" element={<Construction />}/>
+
+                </>)
                 :(<Route path="/profil/:userId" element={<Home messageError={error} />}/>
                 )} 
-                <Route path="/" element={<Home messageError={error} />} />
+                <Route path="/" element={<><Home messageError={error} /><Loading/></>} />
             </Routes>
 
         </datasContext.Provider>

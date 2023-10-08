@@ -27,7 +27,8 @@ const MainGroup = styled.div`
 `
 
 const UserCard = styled.div`
-width:100%;
+    width:100%;
+    font-size:50px;
 `
 const UserName = styled.div`
     color: red;
@@ -39,18 +40,27 @@ const UserName = styled.div`
 const Bienvenue = styled.p`
     color: #000000;
     font-size: 50px;
+
+    & span{
+        color: red;
+    }
+`
+const Sentence = styled.p`
+    font-size: 20px;
+    color:black;
 `
 
 function Profil() {
     const { datas } = useContext(datasContext);
-
+    const levelSentence = "Félicitation ! Vous avez explosé vos objectifs hier 👏";
     const userName = {firstName : datas?.userDatas.userInfos.firstName, lastName : datas?.userDatas.userInfos.lastName}
     if (!datas) return null;
     return <MainProfil>
         <UserCard>
             <UserName>
-            {<span><Bienvenue>Bonjour</Bienvenue> {(userName.firstName)}
-            </span>}      
+            <Bienvenue>Bonjour <span>{(userName.firstName)}
+            </span></Bienvenue>     
+            <Sentence>{levelSentence}</Sentence> 
             </UserName>
         </UserCard>
         <MainGroup>

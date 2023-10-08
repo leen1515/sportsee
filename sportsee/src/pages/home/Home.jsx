@@ -65,10 +65,10 @@ function Home({ messageError }) {
       <MainHome>
           <ModeDatas>
               {api ? "Les données proviennent de l'API" : "Les données proviennent du Mock"}
-              {messageError ? <p>Erreur : {messageError}</p> : <p>il n'y a pas d'erreur sur la page</p>}
+              {messageError ? <p>{messageError}</p> : <p>il n'y a pas d'erreur sur la page</p>}
           </ModeDatas>
           <APISwitch />
-          <UserChoice onClick={() => handleUserChoice(18)}>User 18</UserChoice>
+            <UserChoice onClick={() => handleUserChoice(18)}>User 18</UserChoice>
             <UserChoice onClick={() => handleUserChoice(12)}>User 12</UserChoice>
       </MainHome>
   );
