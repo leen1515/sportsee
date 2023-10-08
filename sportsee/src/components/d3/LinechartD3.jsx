@@ -17,7 +17,7 @@ function LineChartD3({ data }) {
         const days = ["L", "M", "M", "J", "V", "S", "D"];
 
         const extendedPixels = 60;
-        const margin = { top: 100, right: 40, bottom: 0, left: -40 };
+        const margin = { top: 200, right: 40, bottom: 0, left: 0 };
         const width = 520 - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
 
@@ -46,22 +46,6 @@ function LineChartD3({ data }) {
             .y(d => y(d.sessionLength))
             .curve(d3.curveCardinal);
 
-        const uniqueDaysCount = uniqueDays.length;
-
-        graphic.append("rect")
-            .attr("x", x(uniqueDays[uniqueDaysCount - 2]))
-            .attr("y", -100)
-            .attr("width", x.bandwidth() + 7)
-            .attr("height", 708)
-            .attr("fill", "#00000008");
-
-        graphic.append("rect")
-            .attr("x", x(uniqueDays[uniqueDaysCount - 1]))
-            .attr("y", -100)
-            .attr("width", x.bandwidth() + 40)
-            .attr("height", 708)
-            .attr("fill", "#00000008");
-
         const gradient = svg.append("defs")
             .append("linearGradient")
             .attr("id", "lineGradient")
@@ -72,7 +56,7 @@ function LineChartD3({ data }) {
         gradient.append("stop")
             .attr("offset", "0%")
             .attr("stop-color", "white")
-            .attr("stop-opacity", 0);
+            .attr("stop-opacity", 0.5);
 
         gradient.append("stop")
             .attr("offset", "100%")

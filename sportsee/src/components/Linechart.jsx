@@ -4,22 +4,30 @@ import { datasContext } from '../routes/GetRoutes';
 import styled from 'styled-components';
 
 const LinechartContainer = styled.div`
-    width: 20%;
+    width: 30%;
 `;
 
 
 function Linechart() {
-        const { datas } = useContext(datasContext);
+    const { datas } = useContext(datasContext);
+
     return (
         <LinechartContainer>
-            <svg id = "linechartSvg" 
+            <svg id="linechartSvg"
                 width="100%"
                 height="263px"
                 viewBox="0 0 500 500"
-                style={{ backgroundColor: '#FF0000', borderRadius: "8px"}}
             >
+                <defs>
+                    <linearGradient id="redToBlackGradient" x1="0%" y1="0%" x2="80%" y2="0%">
+                        <stop offset="80%" style={{ stopColor: "#FF0000", stopOpacity: 1 }} />
+                        <stop offset="100%" style={{ stopColor: "#c80101", stopOpacity: 1 }} />
+                    </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#redToBlackGradient)" rx="8" ry="8" />
+
                 {datas && (
-                    <LinechartD3 data={ datas?.averageDatas?.sessions } />
+                    <LinechartD3 data={datas?.averageDatas?.sessions} />
                 )}
                 <text x="32" y="100" fill="#ffffff87" fontSize="30px">
                     Durée moyenne des
@@ -31,6 +39,5 @@ function Linechart() {
         </LinechartContainer>
     );
 }
-
 
 export default Linechart;

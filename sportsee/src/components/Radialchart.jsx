@@ -4,7 +4,7 @@ import { datasContext } from '../routes/GetRoutes';
 import styled from 'styled-components';
 
 const RadialchartContainer = styled.div`
-    width: 20%;
+    width: 30%;
     height:100%;
     display:flex;
     align-items: center;
@@ -15,7 +15,7 @@ function Radialchart() {
         const { datas } = useContext(datasContext);
     return (<RadialchartContainer>
         <svg id = "radialchartSvg" 
-        width="100%"
+        width="80%"
         height="263px"
         viewBox="0 0 500 500"
         style = {{backgroundColor: '#FBFBFB', borderRadius: "8px"}}

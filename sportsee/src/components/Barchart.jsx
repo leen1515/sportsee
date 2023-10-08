@@ -14,7 +14,7 @@ function BarChart() {
             <svg id="barchartSvg"
                 width="100%"
                 height="320"
-                viewBox="0 0 825 320"
+                viewBox="0 0 867 320"
                 fill = "#FBFBFB"
                 preserveAspectRatio="xMinYMin meet">
                 <text x="32" y="50" fill="#20253A" fontSize="15">

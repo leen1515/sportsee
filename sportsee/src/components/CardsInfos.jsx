@@ -8,16 +8,17 @@ import styled from 'styled-components';
 
 const CardsContainer = styled.div`
     position: relative;
-    width: 30%;
-    height:100vh;
+    width: 28%;
+    height:70vh;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     margin-right: 60px;
+    margin-top: 0px;
 `;
 
 const Container = styled.div`
-    background-color: #00000010;
+    background-color: #FBFBFB;
     width: 200px;
     display: flex;
     flex-direction: column;
@@ -71,7 +72,6 @@ function KeyDataItem({ icon, altText, value, label, color }) {
             <InnerContainer>
                 <DataImage $bgcolor={color} src={icon} alt={altText} />
                 <ColumnContainer>
-
                     <ValueText>{value}</ValueText>
                     <LabelText>{label}</LabelText>
                 </ColumnContainer>
