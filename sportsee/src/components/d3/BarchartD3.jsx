@@ -230,9 +230,10 @@ function BarChartD3({ data }) {
             .on('mouseover', mouseover)
             .on('mousemove', mousemove)
             .on('mouseleave', mouseleave);
-            
+
             return () => {
-                d3.select(svgRef.current).selectAll("*").remove();}
+                d3.select(svgRef.current).selectAll("*").remove();
+                d3.select('.infosBulle').remove();}
     }, [data]);
     return <svg ref={svgRef}></svg>;
 }
