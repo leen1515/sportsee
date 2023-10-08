@@ -17,7 +17,6 @@ function GetRoutes(){
 
     useEffect(() => {
         if (!idUserSelected && null);
-        console.log('Fetching data for user:', idUserSelected);
         const fetchData = async () => {
             setDataLoading(true);
             try {
@@ -30,7 +29,6 @@ function GetRoutes(){
         
                 setDatas(data);
             } catch (err) {
-                console.log('Error fetching data:', err);
                 setError(err.message || "An error occurred");
             } finally {
                 setDataLoading(false);

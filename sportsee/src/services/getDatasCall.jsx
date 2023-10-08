@@ -4,7 +4,6 @@ import { getUserId, getActivity, getAverage, getPerformance } from './Api';
 export async function getDatasSection(mock, userId, apiCall) {
     const API_URL = "http://localhost:3001";
     const datas = !apiCall? await Axios.get(mock).then(res => res.data) : null;
-    console.log("datas", datas);
     const fetchData = async (apiFunction, dataPath) => {
         if (apiCall) {
             return await apiFunction(API_URL, userId);

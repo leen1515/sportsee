@@ -12,7 +12,6 @@ const RadarchartContainer = styled.div`
 `;
 function Radarchart() {
         const { datas } = useContext(datasContext);
-        console.log("7 radarchart", datas?.performancesDatas)
     return (
         <RadarchartContainer><svg id = "radarchartSvg" 
         width="100%"

@@ -85,7 +85,6 @@ function KeyDataItem({ icon, altText, value, label, color }) {
 
 function CardsInfos() {
     const { datas } = useContext(datasContext);
-    console.log("22 keydata", datas?.userDatas?.keyData)
     const keyData = datas?.userDatas?.keyData;
     const dataItems = [
         { icon: calories, altText: 'calories', value: `${keyData.calorieCount} kCal`, label: 'Calories', color: '#ff000040' },

@@ -13,7 +13,6 @@ const RadialchartContainer = styled.div`
 
 function Radialchart() {
         const { datas } = useContext(datasContext);
-        console.log("7 radialchart", datas?.userDatas?.todayScore)
     return (<RadialchartContainer>
         <svg id = "radialchartSvg" 
         width="100%"
