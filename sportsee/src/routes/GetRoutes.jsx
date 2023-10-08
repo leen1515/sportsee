@@ -59,7 +59,7 @@ function GetRoutes(){
                 <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
                 <Route path="/*" element={<Construction />}/>
                 </>)}
-                {(idUserSelected && !apiStatut && error === "Veuillez sélectionner un utilisateur présent") && (
+                {(idUserSelected && !apiStatut && (error === "Veuillez sélectionner un utilisateur présent" || "Network Error")) && (
                 <><Route path="/profil/:userId" element={<Profil />} />
                 <Route path="/profil" element={<Profil />} />
                 <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
