@@ -15,7 +15,7 @@ function Radarchart() {
     return (
         <RadarchartContainer><svg id = "radarchartSvg" 
         width="100%"
-        height="223px"
+        height="263px"
         viewBox="0 0 500 500"
         style = {{backgroundColor: '#282D30', borderRadius: "5px"}}
     >
