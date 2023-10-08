@@ -19,12 +19,13 @@ function Radialchart() {
         height="263px"
         viewBox="0 0 500 500"
         style = {{backgroundColor: '#FBFBFB', borderRadius: "8px"}}
-    >  <text width= "100px" x="32" y="100" fill="#ffffff87" fontSize="30px">
-    Score
-</text>
+    >  
         {datas && (
             <RadialchartD3 data={ datas?.userDatas} />
         )}
+        <text width= "100px" x="20" y="30" fill="#000000" fontSize="30px">
+    Score
+</text>
        
     </svg></RadialchartContainer>)
 }
