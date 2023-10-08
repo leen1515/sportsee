@@ -178,6 +178,9 @@ function LineChartD3({ data }) {
                 .duration(300)
                 .attr("opacity", 0);
         }
+        
+        return () => {
+            d3.select(svgRef.current).selectAll("*").remove();}
     }, [data]);
 
     return <svg ref={svgRef}></svg>;

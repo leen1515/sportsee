@@ -77,6 +77,8 @@ function RadialChartD3({ data }) {
             .attr("dy", "1.4em")
             .text(`de votre objectif`);
 
+            return () => {
+                d3.select(svgRef.current).selectAll("*").remove();}
     }, [data]);
 
     return <svg ref={svgRef}></svg>;

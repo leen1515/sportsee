@@ -9,7 +9,6 @@ const BarchartContainer = styled.div`
 
 function BarChart() {
     const { datas } = useContext(datasContext);
-    console.log("7 datas", datas?.activitiesDatas?.sessions)
     return (
         <BarchartContainer>
             <svg id="barchartSvg"

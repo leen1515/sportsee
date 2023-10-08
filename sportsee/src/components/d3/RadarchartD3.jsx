@@ -88,6 +88,8 @@ function RadarChart({ datas }) {
                 .text(dataFrenchKind[value.kind]);
         });
 
+        return () => {
+            d3.select(svgRef.current).selectAll("*").remove();}
 
     }, [datas]);
 
