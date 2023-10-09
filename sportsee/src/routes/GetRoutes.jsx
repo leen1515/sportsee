@@ -27,20 +27,25 @@ function GetRoutes(){
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (!idUserSelected && null);
         const fetchData = async () => {
             setDataLoading(true);
+            
+            if (!idUserSelected) {
+                setError("Veuillez sélectionner un utilisateur présent");
+                setDataLoading(false);
+                return;
+            }
+    
             try {
-                if (!idUserSelected) throw new Error("Veuillez sélectionner un utilisateur présent");
-        
                 const isAPI = apiStatut && idUserSelected;
                 const data = isAPI 
                     ? await retrieveDatasSection(undefined, idUserSelected, true)
                     : await retrieveDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', idUserSelected, false);
-        
+                
                 setDatas(data);
+                setError(null); 
             } catch (err) {
-                setError(err.message || "An error occurred");
+                setError(err.message || "An unknown error occurred");
             } finally {
                 setDataLoading(false);
             }
@@ -48,6 +53,7 @@ function GetRoutes(){
         
         fetchData();
     }, [idUserSelected, apiStatut]);
+    
 
     const choiceId = (id) => {
         setIdUserSelected(id);
@@ -60,23 +66,22 @@ function GetRoutes(){
     
     return (
         <datasContext.Provider value={{ datas, api: apiStatut, choiceId, toggleAPIMode, idUserSelected }}>
-        {(isDataLoading ) && <Loading />}
             <Routes>
-                {(idUserSelected && apiStatut && error === "Veuillez sélectionner un utilisateur présent") && (
+                {(idUserSelected && apiStatut &&  !isDataLoading && error === "Veuillez sélectionner un utilisateur présent") && (
+                <><Route path="/profil/:userId" element={<Profil />} />
+                <Route path="/profil" element={<Profil />} />
+                <Route path="/" element={<><Home messageError={error} /></>} />
+                <Route path="/*" element={<Construction />}/>
+                </>)}
+                {(idUserSelected && !apiStatut && !isDataLoading && (error === "Veuillez sélectionner un utilisateur présent" || "Network Error")) && (
                 <><Route path="/profil/:userId" element={<Profil />} />
                 <Route path="/profil" element={<Profil />} />
                 <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
                 <Route path="/*" element={<Construction />}/>
                 </>)}
-                {(idUserSelected && !apiStatut && (error === "Veuillez sélectionner un utilisateur présent" || "Network Error")) && (
-                <><Route path="/profil/:userId" element={<Profil />} />
-                <Route path="/profil" element={<Profil />} />
-                <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
-                <Route path="/*" element={<Construction />}/>
-                </>)}
-                <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
-                <Route path="/profil/:userId" element={<><Home messageError={error} /><Loading /></>} />
-                <Route path="/profil" element={<><Home messageError={error} /><Loading /></>} />
+                <Route path="/" element={<><Home messageError={error} /><Loading messageError={error}/></>} />
+                <Route path="/profil/:userId" element={<><Home messageError={error} /><Loading messageError={error}/></>} />
+                <Route path="/profil" element={<><Home messageError={error} /><Loading messageError={error}/></>} />
                 <Route path="/*" element={<Construction />} />
             </Routes>
 

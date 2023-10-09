@@ -1,6 +1,6 @@
 import Styled from "styled-components";
 import { datasContext } from "../routes/GetRoutes";
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const CircleContainer = Styled.div`
     width: 100%;
@@ -48,17 +48,22 @@ const SelectMessage = Styled.p`
  * @description The Loading component displays a loading animation and the selected user's ID.
  * @returns {JSX.Element}
  */
-function Loading(){
+function Loading({messageError}){
 const { idUserSelected } = useContext(datasContext);
-
+const [ error, setError ]= useState(messageError);
+useEffect(() => {
+setError(messageError)
+return () => {setError(undefined)}
+},[messageError]
+)
     return (
         <>
         <CircleContainer>
             <Circle>
             </Circle>
         </CircleContainer>
-        <SelectMessage>Votre selection est {idUserSelected}</SelectMessage>
-             </>
+        <SelectMessage>{!messageError&& "selection Utilisateur : " +idUserSelected}</SelectMessage>
+            </>
     );
 }
 

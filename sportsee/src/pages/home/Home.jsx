@@ -1,7 +1,7 @@
 import APISwitch from "../../components/APISwitch";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { datasContext } from "../../routes/GetRoutes";
 
 const MainHome = styled.main`
@@ -81,11 +81,17 @@ function Home({ messageError }) {
       choiceId(id);
       navigate(`/profil/${id}`);
     }
+      const [ error, setError ]= useState(messageError);
+
+      useEffect(() => {
+        setError(messageError)
+        },[messageError]
+        )
   return (
       <MainHome>
           <ModeDatas>
               {api ? "Les données proviennent de l'API" : "Les données proviennent du Mock"}
-              {messageError ? <p>{messageError}</p> : <p>il n'y a pas d'erreur sur la page</p>}
+              {error?(<p>{error}</p>) : <p>il n'y a pas d'erreur sur la page</p>}
           </ModeDatas>
           <APISwitch />
             <UserChoice onClick={() => handleUserChoice(18)}>User 18</UserChoice>
