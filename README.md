@@ -3,7 +3,7 @@
 
 Voici Sportsee. Il s'agit d'un site React analytic permettant de visualiser ses propres données sur une interface dynamique et intuitive. Sportsee permet de suivre l'évolution de son hygiene de vie. Les séances de sport, les calories dépensés, les proteines, lipides consommés, avec sportsee, vous êtes près de votre corps, vous êtes prêt pour le sport.
 
-Les graphiques sont codé avec D3, le style css est géré avec Styled Components. La documentation a été réalisé avec JSdoc.
+Les graphiques sont codés avec D3, le style css est géré avec Styled Components. La documentation a été réalisée avec JSdoc.
 
 ## Liens
 La démonstration est en ligne sur gitpage:
@@ -61,5 +61,4 @@ En local l'application le reconnaitra. pour un server à distance, il faut chang
     const API_URL = "http://localhost:3001";
 ```
 
-Voilà,
 A suivre...
