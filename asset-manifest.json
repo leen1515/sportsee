@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/leen1515/sportsee/static/js/main.05482143.js",
+    "main.js": "/leen1515/sportsee/static/js/main.f82797ef.js",
     "static/js/111.20cb6966.chunk.js": "/leen1515/sportsee/static/js/111.20cb6966.chunk.js",
     "static/media/logo.svg": "/leen1515/sportsee/static/media/logo.91308fbcbce811907c09885e1241b59f.svg",
     "static/media/swim.svg": "/leen1515/sportsee/static/media/swim.c135dfed9473b0728721ce9a4c20819a.svg",
@@ -12,10 +12,10 @@
     "static/media/cheeseburger.svg": "/leen1515/sportsee/static/media/cheeseburger.18f60e0efe37e86bcac036d673f0bab0.svg",
     "static/media/energy.svg": "/leen1515/sportsee/static/media/energy.25fef86ed5860200bdf90f9cd185e1e3.svg",
     "static/media/barbell.svg": "/leen1515/sportsee/static/media/barbell.c9f62cf1ca88da4b2dee77390edd0fe3.svg",
-    "main.05482143.js.map": "/leen1515/sportsee/static/js/main.05482143.js.map",
+    "main.f82797ef.js.map": "/leen1515/sportsee/static/js/main.f82797ef.js.map",
     "111.20cb6966.chunk.js.map": "/leen1515/sportsee/static/js/111.20cb6966.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.05482143.js"
+    "static/js/main.f82797ef.js"
   ]
 }
