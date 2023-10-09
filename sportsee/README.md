@@ -1,70 +1,65 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Sportsee
 
-## Available Scripts
+Voici Sportsee. Il s'agit d'un site React analytic permettant de visualiser ses propres données sur une interface dynamique et intuitive. Sportsee permet de suivre l'évolution de son hygiene de vie. Les séances de sport, les calories dépensés, les proteines, lipides consommés, avec sportsee, vous êtes près de votre corps, vous êtes prêt pour le sport.
 
-In the project directory, you can run:
+Les graphiques sont codé avec D3, le style css est géré avec Styled Components. La documentation a été réalisé avec JSdoc.
 
-### `npm start`
+## Liens
+La démonstration est en ligne sur gitpage:
+https://leen1515.github.io/sportsee/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+La documentation est accessible sur cet url :
+https://leen1515.github.io/sportsee/documentation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## server
+Le server se met en ligne sur le port 3001. Seul les données en version mock sont disponible sur gitpage. Un bouton permet de switcher entre les deux. Dans la démonstration, une erreur de type Network apparait quand le server ne donne aucune réponse.
+Le mot clé Mocked à côté du nom de l'utilisateur nous indique que nous sommes sur la version mock.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Pour installer les dépendances du projet,
+1 - il faut cibler le repertoire parent du package.json
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+  npm i
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Ensuite lancer React
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+  npm start
+```
 
-## Learn More
+2 - pour tester avec le server, il faut cloner ce lien:
+https://github.com/OpenClassrooms-Student-Center/P9-front-end-dashboard.git
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Dans le repertoire App, le fichier index.js, il faut écrire le numero de port que j'utilise par défaut, 3001 : 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```javascript
+const app = express()
+app.use(cors())
+const port = 3001
+app.use(router)
+app.listen(port, () => console.log(`Magic happens on port ${port}`))
+```
 
-### Code Splitting
+L'installer avec npm i et le lancer
+```bash
+  npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+En local l'application le reconnaitra. pour un server à distance, il faut changer la variable du fichier getDatasCall.jsx:
 
-### Analyzing the Bundle Size
+```javascript
+    const API_URL = "http://localhost:3001";
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Voilà,
+A suivre...
