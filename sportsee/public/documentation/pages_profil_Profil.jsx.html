@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/profil/Profil.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/profil/Profil.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import styled from 'styled-components';
+import { useContext } from 'react';
+import { datasContext } from '../../routes/GetRoutes';
+import BarChart from '../../components/Barchart';
+import Linechart from '../../components/Linechart';
+import Radarchart from '../../components/Radarchart';
+import Radialchart from '../../components/Radialchart';
+import CardsInfos from '../../components/CardsInfos';
+
+const MainProfil = styled.main`
+    position:relative;
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+    white-space: break-spaces;
+    width: calc(100% - 117px);
+    max-width: 2000px;
+    height:100%;
+    max-height: 900px;
+    top:50px;
+    left:70px;
+`
+const Container = styled.div`
+    display:flex;
+    flex-direction:row;
+    width:100%;
+    height:100%;
+    justify-content:flex-start;
+`
+const MainContainerGraphic = styled.div`
+    width:100%;
+    padding:0;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+`
+
+const MainGroup = styled.div`
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:nowrap;
+    margin-top: -20px;
+    width:80%;
+    height:fit-content;
+`
+
+const UserCard = styled.div`
+    width:100%;
+    font-size:50px;
+`
+const UserName = styled.div`
+    color: red;
+    font-size: 50px;
+    width:100%;
+    white-space:nowrap;
+`
+
+const Bienvenue = styled.p`
+    color: #000000;
+    font-size: 25px;
+    padding:0;
+    margin:50px 0 0 0;
+
+    &amp; span{
+        color: red;
+    }
+`
+const Sentence = styled.p`
+    align-self: flex-start;
+    font-size: 12px;
+    color:black;
+    padding:0;
+`
+/** 
+ * @namespace Profil
+ * @function Profil
+ * @description this component renders a user profile page with various charts and information cards
+* organizes structure around graphic elements.
+* @returns {JSX.Element}.
+*/
+function Profil() {
+    const { datas } = useContext(datasContext);
+    const levelSentence = "Félicitation ! Vous avez explosé vos objectifs hier 👏";
+    const userName = { firstName: datas?.userDatas.userInfos.firstName, lastName: datas?.userDatas.userInfos.lastName }
+    if (!datas) return null;
+    return &lt;MainProfil>
+        &lt;UserCard>
+            &lt;UserName>
+                &lt;Bienvenue>Bonjour &lt;span>{(userName.firstName)}
+                &lt;/span>&lt;/Bienvenue>
+                &lt;Sentence>{levelSentence}&lt;/Sentence>
+            &lt;/UserName>
+        &lt;/UserCard>
+        &lt;Container>
+            &lt;MainContainerGraphic>
+                &lt;BarChart />
+                &lt;MainGroup>
+                    &lt;Linechart />
+                    &lt;Radarchart />
+                    &lt;Radialchart />
+                &lt;/MainGroup>
+            &lt;/MainContainerGraphic>
+            &lt;CardsInfos />
+        &lt;/Container>
+
+    &lt;/MainProfil>;
+}
+
+export default Profil;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#APISwitch">APISwitch</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Barchart">Barchart</a></li><li><a href="global.html#BarchartD3">BarchartD3</a></li><li><a href="global.html#CardsInfos">CardsInfos</a></li><li><a href="global.html#Construction">Construction</a></li><li><a href="global.html#GetRoutes">GetRoutes</a></li><li><a href="global.html#HeaderComponents">HeaderComponents</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Linechart">Linechart</a></li><li><a href="global.html#LinechartD3">LinechartD3</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#NavbarLeft">NavbarLeft</a></li><li><a href="global.html#NavbarTop">NavbarTop</a></li><li><a href="global.html#Profil">Profil</a></li><li><a href="global.html#RadarChartD3">RadarChartD3</a></li><li><a href="global.html#Radarchart">Radarchart</a></li><li><a href="global.html#RadialChartD3">RadialChartD3</a></li><li><a href="global.html#Radialchart">Radialchart</a></li><li><a href="global.html#getAverage">getAverage</a></li><li><a href="global.html#getPerformance">getPerformance</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleUserChoice">handleUserChoice</a></li><li><a href="global.html#retrieveDatasSection">retrieveDatasSection</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 09 2023 02:18:18 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

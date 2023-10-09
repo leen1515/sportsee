@@ -6,6 +6,11 @@ import styled from 'styled-components';
 const BarchartContainer = styled.div`
     width: 100%;
 `;
+/** 
+ * @namespace Barchart
+ * @function Barchart
+ * @description Container of the barchart. It contains the `BarChartD3` component, stylizing containers svg.
+ * @returns {JSX.Element} */
 
 function BarChart() {
     const { datas } = useContext(datasContext);

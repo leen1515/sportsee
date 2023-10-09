@@ -1,7 +1,17 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
+/**
+ * @namespace RadialChartD3
+ * @function RadialChartD3
+ * @description that generates a radial chart svg 
+ * It represents the score (from the data prop) on a radial scale.
+ * @param {Object} props.data from the API filtred by the `getUserId` function.
+ * @returns {JSX.Element}
+ */
+
 function RadialChartD3({ data }) {
+
     const svgRef = useRef(null);
 
     useEffect(() => {
@@ -16,23 +26,27 @@ function RadialChartD3({ data }) {
         const radius = Math.min(width, height) / 2 - 10;
         const fullCircle = -2 * Math.PI;
 
+        // Convert the 'todayScore' data to a percentage value.
         const dataAverage = data?.todayScore * 100;
 
         const mainGroup = svg.append("g")
             .attr("transform", `translate(${margin.left + width / 2}, ${margin.top + height / 2})`);
-
+        
+        // Draw a background circle for visual context.
         mainGroup.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
             .attr("r", radius)
             .attr("fill", "#ffffff");
 
+        // Define a scale to map scores to angles for the arc.
         const scoreScale = d3.scaleLinear()
             .domain([0, 100])
             .range([0, fullCircle]);
 
         const arcAdjustment = 0.05;
 
+        /* arc draw */
         const arc = d3.arc()
             .innerRadius(radius - 10)
             .outerRadius(radius)
@@ -45,11 +59,17 @@ function RadialChartD3({ data }) {
             .attr('stroke', 'red')
             .attr('stroke-width', 20);
 
+        /* it calculates coordinates of the extremities of arc, it's for the position of circles, for 
+        * simulate a border-radius, the 5 is the padding. */
         const startX = (radius - 5) * Math.sin(arcAdjustment);
         const startY = -(radius - 5) * Math.cos(arcAdjustment);
         const endX = (radius - 5) * Math.sin(scoreScale(dataAverage) - arcAdjustment);
         const endY = -(radius - 5) * Math.cos(scoreScale(dataAverage) - arcAdjustment);
 
+        
+
+        /* it's appending circles elements to the
+        `mainGroup` SVG group. Used to extremity of arc in Radius */
         mainGroup.append('circle')
             .attr('cx', startX)
             .attr('cy', startY)
@@ -62,6 +82,8 @@ function RadialChartD3({ data }) {
             .attr('r', 15)
             .attr('fill', 'red');
 
+        /* it's appending a new `<tspan>` element to the
+       `textElement` SVG element. */
         let textElement = mainGroup.append("text")
             .attr("x", 0)
             .attr("y", -40)

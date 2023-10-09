@@ -1,8 +1,16 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-
+/**
+ * @namespace RadarChartD3
+ * @function RadarChartD3
+ * @description RadarChart React component for rendering a radar/spider chart.
+ * @param {Object} props.datas - The data for plotting the radar chart.
+ * @returns {JSX.Element} SVG element.
+ */
 function RadarChart({ datas }) {
     const svgRef = useRef(null);
+    
+    /** Mapping of data kind values to their French representation. */
     const dataFrenchKind = {
         "1": "Cardio",
         "2": "Energie",
@@ -11,7 +19,11 @@ function RadarChart({ datas }) {
         "5": "Vitesse",
         "6": "Intensité"
     };
-
+    /**
+     * Adjust the index for data kinds for proper positioning in the chart.
+     * @param {number} kind - The kind of data (from 1 to 6).
+     * @returns {number} The adjusted index.
+     */
     const adjustIndex = (kind) => {
         if (kind === 6) return 6;  // "Intensité"
         if (kind === 1) return 5;  // "Cardio"
@@ -34,6 +46,8 @@ function RadarChart({ datas }) {
         const maxValue = d3.max(datas?.dataPerformance, (d) => d?.value);
         const rScale = d3.scaleLinear().domain([0, maxValue]).range([0, radius]);
 
+        // This loop is responsible for calculating the positions of vertices 
+        //for polygons to build the background grid of a radar/spider chart.
         for (let i = 1; i <= 5; i++) {
             const currentRadius = i * (radius / 5);
             const lineCoordinates = Array.from({ length: numberOfSides + 1 }).map(
@@ -52,6 +66,9 @@ function RadarChart({ datas }) {
                 .attr('stroke-width', 2);
         }
 
+         //used to render a polygon/path for the radar chart. 
+         //It ensures that the path is closed by appending the starting point 
+         //to the end of the list of points.
         const dataPoints = datas?.dataPerformance?.map(value => {
             let adjustedIndex = adjustIndex(value.kind);
             return {
@@ -61,6 +78,8 @@ function RadarChart({ datas }) {
         });
         dataPoints.push(dataPoints[0]);
 
+        //represents the main shape of the radar chart based on the dataPoints. 
+        //filled with a semi-transparent red color.
         svg
             .append('path')
             .datum(dataPoints)
@@ -69,6 +88,8 @@ function RadarChart({ datas }) {
             .attr('stroke', 'blue')
             .attr('stroke-width', 0);
 
+            // defines the distance of the labels 
+            // on the radar chart from data points.
         const textOffset = 35;
 
         datas?.dataPerformance.forEach(value => {

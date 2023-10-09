@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/d3/BarchartD3.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/d3/BarchartD3.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as d3 from 'd3';
+import { useEffect, useRef } from 'react';
+
+/**
+ * @namespace BarchartD3
+ * @function BarchartD3
+ * @description BarChartD3 React component for rendering a bar chart
+ * @param {Object} data - The data for bar display in the chart.
+ * @returns {JSX.Element} SVG element.
+ */
+function BarChartD3({ data }) {
+    const svgRef = useRef(null);
+
+    useEffect(() => {
+        if (!data || !svgRef.current ) return;
+        const svg = d3.select(svgRef.current)
+        .append('g')
+        .attr('width', 680)
+        .attr('height', 150)
+        .attr('transform', 'translate(50, 110)');
+
+        svg.selectAll('*').remove();
+
+        const minKilo = d3.min(data, (k) => k.kilogram);
+        const maxKilo = d3.max(data, (k) => k.kilogram);
+        const max = d3.max(data, (c) => c.calories);;
+        const lastTenDays = data.slice(-10);
+
+        //transform in porcentage the width and height of the svg
+        // magic number to display the svg in the right size
+        const chartWidth = 825 * 0.83; // 80% of 825 is 660
+        const chartHeight = 320 * 0.44; // Roughly 44% of 320 is 140
+        
+        const x = d3
+            .scaleBand()
+            .domain(data.map((d) => d.day))
+            .range([0, chartWidth])
+            .paddingInner(0.95);
+        
+        const y = d3
+            .scaleLinear()
+            .domain([0, max])
+            .range([chartHeight, 0]);
+        
+        const yKilo = d3
+            .scaleLinear()
+            .domain([minKilo, maxKilo])
+            .range([chartHeight, 0]);
+        
+
+        const xAxis = d3.axisBottom(x)
+            .tickSize(0)
+            .tickValues(lastTenDays.map((d, i) => (d.day)));
+
+
+        const yAxis = d3.axisRight(yKilo).ticks(3);
+
+        const xGroup = svg
+            .append('g')
+            .attr('transform', `translate(0, 139)`);
+
+        const yGroup = svg
+            .append('g')
+            .attr('transform', `translate(700, 0)`);
+        const xGroupMiddle = svg
+            .append('g')
+            .attr('transform', `translate(0, 70)`);
+
+        const xGroupTop = svg.append('g');
+
+
+
+        xGroup
+            .select('.domain')
+            .attr('stroke', '#d30f0f')
+            .attr('stroke-width', 1);
+
+        xGroup
+            .selectAll('g.tick text')
+            .attr('transform', 'translate(0, 10)');
+
+        yGroup.select('.domain').attr('stroke-width', 0);
+        yGroup.selectAll('g.tick text')
+            .attr('transform', 'translate(20, 0)')
+
+        xGroup.call(xAxis).style('font-size', '12px');
+        xGroupTop.call(xAxis);
+        xGroupMiddle.call(xAxis);
+
+        xGroup
+            .select('.domain')
+            .attr('stroke', '#DEDEDE')
+            .attr('stroke-width', 1);
+
+        xGroupTop
+            .select('.domain')
+            .attr('stroke', '#DEDEDE')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '2');
+
+        xGroupMiddle
+            .select('.domain')
+            .attr('stroke', '#DEDEDE')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '2');
+
+        xGroup
+            .selectAll('g.tick text')
+            .attr('transform', 'translate(0, 10)');
+
+        xGroupMiddle.selectAll('g.tick text').attr('opacity', '0');
+        xGroupTop.selectAll('g.tick text').attr('opacity', '0');
+
+        yGroup.call(yAxis).style('font-size', '14px');
+
+        yGroup.select('.domain').attr('stroke-width', 0);
+
+        yGroup
+            .selectAll('g.tick text')
+            .attr('transform', 'translate(20, 0)')
+
+        const groupKilo = svg
+            .append('g')
+            .attr('transform', `translate(-6, 0)`)
+            .attr('width', 685)
+            .attr('height', 140);
+
+        const groupCalories = svg
+            .append('g')
+            .attr('transform', `translate(6, 0)`);
+
+        const rectKilo = groupKilo
+            .selectAll('line')
+            .data(data)
+            .enter()
+            .append('line')
+            .attr('x1', (d) => x(d.day))
+            .attr('x2', (d) => x(d.day))
+            .attr('y2', '140')
+            .attr('y1', '140')
+            .attr('stroke', '#000')
+            .attr('stroke-width', '8px')
+            .attr('stroke-linecap', 'round');
+
+        rectKilo
+            .transition()
+            .duration(600)
+            .attr('y2', (d) => yKilo(d.kilogram));
+
+        const rectCalories = groupCalories
+            .selectAll('line')
+            .data(data)
+            .enter()
+            .append('line')
+            .attr('fill', '#E60000')
+            .attr('x1', (d) => x(d.day))
+            .attr('x2', (d) => x(d.day))
+            .attr('y2', '140')
+            .attr('y1', '140')
+            .attr('stroke', '#E60000')
+            .attr('stroke-width', '8px')
+            .attr('stroke-linecap', 'round');
+
+        rectCalories
+            .transition()
+            .duration(600)
+            .attr('y1', (d) => y(d.calories));
+
+        svg
+            .append('g')
+            .append('rect')
+            .attr('transform', `translate(-20, 140)`)
+            .attr('width', 730)
+            .attr('height', 5)
+            .attr('fill', '#FBFBFB');
+
+        // Animation to the svg to display an infosbulle with kg and calories
+
+        const interactiveZones = svg.append("g").attr("class", "interactive-zones");
+
+        let infosBulle = d3.select('.infosBulle');
+        if (infosBulle.empty()) {
+            infosBulle = d3.select('body')
+                .append('div')
+                .attr('class', 'infosBulle')
+                .style('position', 'absolute')
+                .style('background-color', '#E60000')
+                .style('color', 'white')
+                .style('padding', '20px 5px')
+                .style('font-size', '10px')
+                .style('font-weight', 'normal')
+                .style('text-align', 'center')
+                .style('width', 'fit-content')
+                .style('height', 'fit-content')
+                .style('box-shadow', '0 0 5px #BDBDBD')
+                .style('pointer-events', 'none')
+                .style('opacity', 0);
+        }
+
+        const mouseover = function (event, d) {
+            infosBulle
+                .transition()
+                .duration(100)
+                .style('opacity', 1);
+            infosBulle
+                .html(d.kilogram + " kg  &lt;br>&lt;br>&lt;br>" + d.calories + " Kcal ")
+                .style('left', (event.pageX) + 'px')
+                .style('top', (event.pageY) + 'px');
+            d3.select(this).attr('opacity', 0.3);
+        };
+        
+        const mousemove = (event, d) => {
+            infosBulle
+                .style('left', (event.pageX) + 'px')
+                .style('top', (event.pageY) + 'px')
+            d3.select(this).attr('opacity', 0.5);
+
+        };
+
+        const mouseleave = (event, d) => {
+            infosBulle
+                .style('opacity', 0)
+            interactiveZones.selectAll('rect').attr('opacity', 0);
+        };
+        interactiveZones
+            .selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", (d) => x(d.day))
+            .attr("y", 0)
+            .attr("width", 100)
+            .attr("transform", `translate(-50, 0)`)
+            .attr("height", 140)
+            .attr("fill", "grey")
+            .attr("opacity", 0)
+            .attr("pointer-events", "all")
+            .on('mouseover', mouseover)
+            .on('mousemove', mousemove)
+            .on('mouseleave', mouseleave);
+
+            return () => {
+                d3.select(svgRef.current).selectAll("*").remove();
+                d3.select('.infosBulle').remove();}
+    }, [data]);
+    return &lt;svg ref={svgRef}>&lt;/svg>;
+}
+
+
+export default BarChartD3;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#APISwitch">APISwitch</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Barchart">Barchart</a></li><li><a href="global.html#BarchartD3">BarchartD3</a></li><li><a href="global.html#CardsInfos">CardsInfos</a></li><li><a href="global.html#Construction">Construction</a></li><li><a href="global.html#GetRoutes">GetRoutes</a></li><li><a href="global.html#HeaderComponents">HeaderComponents</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Linechart">Linechart</a></li><li><a href="global.html#LinechartD3">LinechartD3</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#NavbarLeft">NavbarLeft</a></li><li><a href="global.html#NavbarTop">NavbarTop</a></li><li><a href="global.html#Profil">Profil</a></li><li><a href="global.html#RadarChartD3">RadarChartD3</a></li><li><a href="global.html#Radarchart">Radarchart</a></li><li><a href="global.html#RadialChartD3">RadialChartD3</a></li><li><a href="global.html#Radialchart">Radialchart</a></li><li><a href="global.html#getAverage">getAverage</a></li><li><a href="global.html#getPerformance">getPerformance</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleUserChoice">handleUserChoice</a></li><li><a href="global.html#retrieveDatasSection">retrieveDatasSection</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 09 2023 02:18:18 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

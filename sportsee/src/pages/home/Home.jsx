@@ -53,10 +53,29 @@ const ModeDatas = styled.div`
     font-size: 13px;
   }`;
 
+
+/** 
+ * @namespace Home
+ * @function Home
+ * @description The `Home` function is a React component, it page role in the application. 
+ * it call the switch API/mock component, and display the error message if there is one.
+ * it handlers also the user choice to navigate to a specific profile page.
+ * @param {string} errormessage  The error message to display. 
+ * @returns {JSX.Element} 
+ * */
+
 function Home({ messageError }) {
   
   const { api, choiceId } = useContext(datasContext);
   const navigate  = useNavigate();
+
+  /** 
+   * @namespace HandleUserChoice 
+   * @function handleUserChoice
+   * @description `handleUserChoice` takes an `id` parameter, calls the `choiceId` function with the
+   * `id`, and navigates to a specific profile page using the `navigate` function.
+   * @param {Number} id The id of the user to navigate to.
+   * */
   const handleUserChoice = (id) => {
     if(!id) return;
       choiceId(id);

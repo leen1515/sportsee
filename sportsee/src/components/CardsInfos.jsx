@@ -66,6 +66,18 @@ const LabelText = styled.p`
     align-self: flex-start;
 `;
 
+/** @memberOf Profil
+/** @function KeyDataItem
+ * It renders a structure with icon, value, and
+ * label, used in a loop to this file's final container.
+ * @param {String} icon defines the icon to be displayed in the container. 
+ * @param {String} altText defines the alt text for the icon.
+ * @param {Number} value with datas from the API, defines the value to be displayed in the container.
+ * @param {String} label defines the label to be displayed in the container.
+ * @param {String} color defines the background color of the icone's container.
+ * @returns {JSX.Element}
+ */
+
 function KeyDataItem({ icon, altText, value, label, color }) {
     return (
         <Container>
@@ -81,7 +93,15 @@ function KeyDataItem({ icon, altText, value, label, color }) {
     );
 }
 
-
+/** 
+ * @namespace CardsInfos
+ * @function CardsInfos
+ * @description function renders a set of cards displaying key data value, such as calories,
+ * protein, carbs, and fat to user.
+ * @returns {JSX.Element} it is returning a container element called "CardsContainer"
+ * that contains multiple instances of the "KeyDataItem" component. Each instance of the "KeyDataItem"
+ * component has props such as "icon", "altText", "value", "label", and "color" that are passed in from
+ * the "dataItems" array.*/
 
 function CardsInfos() {
     const { datas } = useContext(datasContext);

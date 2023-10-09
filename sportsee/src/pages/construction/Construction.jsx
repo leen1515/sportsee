@@ -39,6 +39,12 @@ const SelectMessage = Styled.p`
     width: 80%;
 `
 ;
+
+/** 
+ * @namespace Construction
+ * @function Construction
+ * @returns {JSX.Element} It renders a loading animation and a message
+indicating that the page does not exist but could exist later (error 404). */
 function Construction(){
     return (
         <>

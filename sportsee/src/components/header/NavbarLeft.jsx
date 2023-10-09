@@ -40,6 +40,12 @@ const Copyright = styled.div`
     z-index:1;
     margin:auto;
 `
+/** 
+ * @namespace NavbarLeft
+ * @function NavbarLeft
+ * @description Defines a component `NavbarLeft`. it represents the structure and content of the left navigation menu.
+ * @returns {JSX.Element} 
+ */
 function NavbarLeft(){
     return  <MenuLeft>
     <NavLeft>

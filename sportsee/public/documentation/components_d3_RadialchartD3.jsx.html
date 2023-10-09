@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/d3/RadialchartD3.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/d3/RadialchartD3.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useRef } from 'react';
+import * as d3 from 'd3';
+
+/**
+ * @namespace RadialChartD3
+ * @function RadialChartD3
+ * @description that generates a radial chart svg 
+ * It represents the score (from the data prop) on a radial scale.
+ * @param {Object} props.data from the API filtred by the `getUserId` function.
+ * @returns {JSX.Element}
+ */
+
+function RadialChartD3({ data }) {
+
+    const svgRef = useRef(null);
+
+    useEffect(() => {
+        if (!data || !svgRef.current) return;
+
+        const svg = d3.select(svgRef.current);
+        svg.selectAll("*").remove();
+
+        const margin = { top: 40, right: 40, bottom: 40, left: 40 };
+        const width = 500 - margin.left - margin.right;
+        const height = 500 - margin.top - margin.bottom;
+        const radius = Math.min(width, height) / 2 - 10;
+        const fullCircle = -2 * Math.PI;
+
+        // Convert the 'todayScore' data to a percentage value.
+        const dataAverage = data?.todayScore * 100;
+
+        const mainGroup = svg.append("g")
+            .attr("transform", `translate(${margin.left + width / 2}, ${margin.top + height / 2})`);
+        
+        // Draw a background circle for visual context.
+        mainGroup.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", radius)
+            .attr("fill", "#ffffff");
+
+        // Define a scale to map scores to angles for the arc.
+        const scoreScale = d3.scaleLinear()
+            .domain([0, 100])
+            .range([0, fullCircle]);
+
+        const arcAdjustment = 0.05;
+
+        /* arc draw */
+        const arc = d3.arc()
+            .innerRadius(radius - 10)
+            .outerRadius(radius)
+            .startAngle(arcAdjustment - 0.03)
+            .endAngle(scoreScale(dataAverage) - arcAdjustment + 0.03);
+
+        mainGroup.append('path')
+            .attr('d', arc)
+            .attr('fill', 'red')
+            .attr('stroke', 'red')
+            .attr('stroke-width', 20);
+
+        /* it calculates coordinates of the extremities of arc, it's for the position of circles, for 
+        * simulate a border-radius, the 5 is the padding. */
+        const startX = (radius - 5) * Math.sin(arcAdjustment);
+        const startY = -(radius - 5) * Math.cos(arcAdjustment);
+        const endX = (radius - 5) * Math.sin(scoreScale(dataAverage) - arcAdjustment);
+        const endY = -(radius - 5) * Math.cos(scoreScale(dataAverage) - arcAdjustment);
+
+        
+
+        /* it's appending circles elements to the
+        `mainGroup` SVG group. Used to extremity of arc in Radius */
+        mainGroup.append('circle')
+            .attr('cx', startX)
+            .attr('cy', startY)
+            .attr('r', 15)
+            .attr('fill', 'red');
+
+        mainGroup.append('circle')
+            .attr('cx', endX)
+            .attr('cy', endY)
+            .attr('r', 15)
+            .attr('fill', 'red');
+
+        /* it's appending a new `&lt;tspan>` element to the
+       `textElement` SVG element. */
+        let textElement = mainGroup.append("text")
+            .attr("x", 0)
+            .attr("y", -40)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "54px");
+
+        textElement.append("tspan")
+            .attr("x", 0)
+            .attr("dy", "0.35em")
+            .attr("font-size", "60px")
+            .text(`${dataAverage}%`);
+
+        textElement.append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.5em")
+            .style("opacity", "0.5")
+            .style("font-size", "40px")
+            .text("de votre");
+
+        textElement.append("tspan")
+            .attr("x", 0)
+            .attr("dy", "1.5em")
+            .style("opacity", "0.5")
+            .style("font-size", "40px")
+            .text("objectif");
+
+        return () => {
+            d3.select(svgRef.current).selectAll("*").remove();
+        }
+    }, [data]);
+
+    return &lt;svg ref={svgRef}>&lt;/svg>;
+}
+
+export default RadialChartD3;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#APISwitch">APISwitch</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Barchart">Barchart</a></li><li><a href="global.html#BarchartD3">BarchartD3</a></li><li><a href="global.html#CardsInfos">CardsInfos</a></li><li><a href="global.html#Construction">Construction</a></li><li><a href="global.html#GetRoutes">GetRoutes</a></li><li><a href="global.html#HeaderComponents">HeaderComponents</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Linechart">Linechart</a></li><li><a href="global.html#LinechartD3">LinechartD3</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#NavbarLeft">NavbarLeft</a></li><li><a href="global.html#NavbarTop">NavbarTop</a></li><li><a href="global.html#Profil">Profil</a></li><li><a href="global.html#RadarChartD3">RadarChartD3</a></li><li><a href="global.html#Radarchart">Radarchart</a></li><li><a href="global.html#RadialChartD3">RadialChartD3</a></li><li><a href="global.html#Radialchart">Radialchart</a></li><li><a href="global.html#getAverage">getAverage</a></li><li><a href="global.html#getPerformance">getPerformance</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleUserChoice">handleUserChoice</a></li><li><a href="global.html#retrieveDatasSection">retrieveDatasSection</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 09 2023 02:18:18 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

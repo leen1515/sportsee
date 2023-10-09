@@ -41,6 +41,13 @@ const SelectMessage = Styled.p`
     width: 80%;
 `
 ;
+
+/** 
+ * @namespace Loading
+ * @function Loading
+ * @description The Loading component displays a loading animation and the selected user's ID.
+ * @returns {JSX.Element}
+ */
 function Loading(){
 const { idUserSelected } = useContext(datasContext);
 

@@ -73,7 +73,13 @@ const Sentence = styled.p`
     color:black;
     padding:0;
 `
-
+/** 
+ * @namespace Profil
+ * @function Profil
+ * @description this component renders a user profile page with various charts and information cards
+* organizes structure around graphic elements.
+* @returns {JSX.Element}.
+*/
 function Profil() {
     const { datas } = useContext(datasContext);
     const levelSentence = "Félicitation ! Vous avez explosé vos objectifs hier 👏";

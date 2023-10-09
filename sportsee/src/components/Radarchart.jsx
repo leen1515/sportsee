@@ -10,6 +10,12 @@ const RadarchartContainer = styled.div`
     align-items: center;
     justify-content: center;
 `;
+/** 
+ * @namespace Radarchart
+ * @function Radarchart
+ * @description Container of the RadarchartD3. It stylizes its svg container.
+ * @returns {JSX.Element} */
+
 function Radarchart() {
         const { datas } = useContext(datasContext);
     return (

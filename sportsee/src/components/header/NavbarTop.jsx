@@ -34,6 +34,13 @@ const SportSeeLogo = styled.img`
     padding:10px;
     cursor: pointer;
 `
+/** 
+ * @namespace NavbarTop
+ * @function NavbarTop
+ * @description It represents the structure and content of the top navigation menu.
+ * @returns {JSX.Element} 
+ */
+
 function NavbarTop(){
     return <Navbar>
         <NavLinkStyle to="/">

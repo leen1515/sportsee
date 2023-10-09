@@ -10,6 +10,11 @@ const RadialchartContainer = styled.div`
     align-items: center;
     justify-content: center;
 `;
+/** 
+ * @namespace Radialchart
+ * @function Radialchart
+ * @description Container of the RadialchartD3. It stylizes its svg container.
+ * @returns {JSX.Element} */
 
 function Radialchart() {
         const { datas } = useContext(datasContext);

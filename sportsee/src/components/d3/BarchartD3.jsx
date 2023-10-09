@@ -1,7 +1,13 @@
 import * as d3 from 'd3';
 import { useEffect, useRef } from 'react';
 
-
+/**
+ * @namespace BarchartD3
+ * @function BarchartD3
+ * @description BarChartD3 React component for rendering a bar chart
+ * @param {Object} data - The data for bar display in the chart.
+ * @returns {JSX.Element} SVG element.
+ */
 function BarChartD3({ data }) {
     const svgRef = useRef(null);
 
@@ -20,6 +26,8 @@ function BarChartD3({ data }) {
         const max = d3.max(data, (c) => c.calories);;
         const lastTenDays = data.slice(-10);
 
+        //transform in porcentage the width and height of the svg
+        // magic number to display the svg in the right size
         const chartWidth = 825 * 0.83; // 80% of 825 is 660
         const chartHeight = 320 * 0.44; // Roughly 44% of 320 is 140
         

@@ -2,12 +2,23 @@ import { Routes, Route } from 'react-router';
 import Home from '../pages/home/Home';
 import Profil from '../pages/profil/Profil';
 import { createContext, useEffect, useState } from "react";
-import { getDatasSection } from '../services/getDatasCall';
+import { retrieveDatasSection } from '../services/getDatasCall';
 import Loading from '../components/Loading';
 import Construction from '../pages/construction/Construction';
 
 export const datasContext = createContext(null);
 
+/** 
+ * @namespace GetRoutes
+ * @function GetRoutes
+ * @description It defining a functional component. Inside it is using
+*the `useState` hook to define several state variables: `datas`, `isDataLoading`, `apiStatut`,
+*`idUserSelected`, and `error`. several of theses states are shared with the `datasContext` context.
+* there are also the routes for the application using the `Routes` and `Route` components from `react-router`.
+* It also uses the `useEffect` hook to call services to fetch datas from the API or the mocked data, 
+* and to handle the error.
+* @returns {JSX.Element}. 
+*/
 function GetRoutes(){
     const [datas, setDatas] = useState(null);
     const [isDataLoading, setDataLoading] = useState(true);
@@ -24,8 +35,8 @@ function GetRoutes(){
         
                 const isAPI = apiStatut && idUserSelected;
                 const data = isAPI 
-                    ? await getDatasSection(undefined, idUserSelected, true)
-                    : await getDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', idUserSelected, false);
+                    ? await retrieveDatasSection(undefined, idUserSelected, true)
+                    : await retrieveDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', idUserSelected, false);
         
                 setDatas(data);
             } catch (err) {

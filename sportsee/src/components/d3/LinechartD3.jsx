@@ -1,6 +1,12 @@
 import * as d3 from 'd3';
 import { useEffect, useRef } from 'react';
-
+/**
+ * @namespace LinechartD3
+ * @function LinechartD3
+ * @description LineChartD3 React component for rendering a line chart
+ * @param {Object} data - The data for plotting the radar chart.
+ * @returns {JSX.Element} SVG element.
+ */
 function LineChartD3({ data }) {
     const svgRef = useRef(null);
 
@@ -8,15 +14,19 @@ function LineChartD3({ data }) {
         if (!data || !svgRef.current) return;
 
         const validData = data.filter(d => !isNaN(d.sessionLength) && typeof d.day === 'number');
+        
+       // It creates an extended data set by appending a copy of the last data point from `validData` 
+       // to the end of the array. Used for the curve touch border of svg.
         const extendedData = [...validData, { ...validData[validData.length - 1] }];
 
         const svg = d3.select(svgRef.current);
         svg.selectAll('*').remove();
 
+        // resolution of the unique value to be used in the x axis
         const uniqueDays = ["L", "Ma", "Me", "J", "V", "S", "D"];
         const days = ["L", "M", "M", "J", "V", "S", "D"];
 
-        const extendedPixels = 60;
+        const extendedPixels = 50;
         const margin = { top: 200, right: 40, bottom: 0, left: 0 };
         const width = 520 - margin.left - margin.right;
         const height = 400 - margin.top - margin.bottom;
@@ -34,6 +44,7 @@ function LineChartD3({ data }) {
             .domain([0, d3.max(extendedData, d => d.sessionLength)])
             .range([height, 0]);
 
+            // add extendedpixel if it is the first or last element of the array
         const line = d3.line()
             .x((d, i) => {
                 if (i === extendedData.length - 1) {
@@ -46,6 +57,7 @@ function LineChartD3({ data }) {
             .y(d => y(d.sessionLength))
             .curve(d3.curveCardinal);
 
+            // pretty gradient in the background
         const gradient = svg.append("defs")
             .append("linearGradient")
             .attr("id", "lineGradient")
@@ -130,7 +142,13 @@ function LineChartD3({ data }) {
             .style("background-color", "white")
             .style("padding", "5px")
             .style("visibility", "hidden");
-
+        /**
+         * Handles mouseover events on interactive zones of the chart.
+         * Displays the tooltip and highlights the associated data point.
+         *
+         * @param {Event} event mouseover event.
+         * @param {Object} d data associated with the hovered interactive zone.
+         */
         function handleMouseOver(event, d) {
             const dataPoint = d3.select(graphic.selectAll(".dot").nodes()[d.day - 1]);
             tooltip.transition()

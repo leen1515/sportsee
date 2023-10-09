@@ -11,6 +11,12 @@ const LinechartContainer = styled.div`
 `;
 
 
+/** 
+ * @namespace Linechart
+ * @function Linechart
+ * @description Container of the LinechartD3. It stylizes its svg container.
+ * @returns {JSX.Element} */
+
 function Linechart() {
     const { datas } = useContext(datasContext);
 

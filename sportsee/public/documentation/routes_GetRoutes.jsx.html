@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/GetRoutes.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/GetRoutes.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Routes, Route } from 'react-router';
+import Home from '../pages/home/Home';
+import Profil from '../pages/profil/Profil';
+import { createContext, useEffect, useState } from "react";
+import { retrieveDatasSection } from '../services/getDatasCall';
+import Loading from '../components/Loading';
+import Construction from '../pages/construction/Construction';
+
+export const datasContext = createContext(null);
+
+/** 
+ * @namespace GetRoutes
+ * @function GetRoutes
+ * @description It defining a functional component. Inside it is using
+*the `useState` hook to define several state variables: `datas`, `isDataLoading`, `apiStatut`,
+*`idUserSelected`, and `error`. several of theses states are shared with the `datasContext` context.
+* there are also the routes for the application using the `Routes` and `Route` components from `react-router`.
+* It also uses the `useEffect` hook to call services to fetch datas from the API or the mocked data, 
+* and to handle the error.
+* @returns {JSX.Element}. 
+*/
+function GetRoutes(){
+    const [datas, setDatas] = useState(null);
+    const [isDataLoading, setDataLoading] = useState(true);
+    const [apiStatut, setApiStatut] = useState(false);
+    const [idUserSelected, setIdUserSelected] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (!idUserSelected &amp;&amp; null);
+        const fetchData = async () => {
+            setDataLoading(true);
+            try {
+                if (!idUserSelected) throw new Error("Veuillez sélectionner un utilisateur présent");
+        
+                const isAPI = apiStatut &amp;&amp; idUserSelected;
+                const data = isAPI 
+                    ? await retrieveDatasSection(undefined, idUserSelected, true)
+                    : await retrieveDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', idUserSelected, false);
+        
+                setDatas(data);
+            } catch (err) {
+                setError(err.message || "An error occurred");
+            } finally {
+                setDataLoading(false);
+            }
+        }
+        
+        fetchData();
+    }, [idUserSelected, apiStatut]);
+
+    const choiceId = (id) => {
+        setIdUserSelected(id);
+    }
+
+    const toggleAPIMode = () => {
+        setApiStatut(prev => !prev);
+    }
+
+    
+    return (
+        &lt;datasContext.Provider value={{ datas, api: apiStatut, choiceId, toggleAPIMode, idUserSelected }}>
+        {(isDataLoading ) &amp;&amp; &lt;Loading />}
+            &lt;Routes>
+                {(idUserSelected &amp;&amp; apiStatut &amp;&amp; error === "Veuillez sélectionner un utilisateur présent") &amp;&amp; (
+                &lt;>&lt;Route path="/profil/:userId" element={&lt;Profil />} />
+                &lt;Route path="/profil" element={&lt;Profil />} />
+                &lt;Route path="/" element={&lt;>&lt;Home messageError={error} />&lt;Loading />&lt;/>} />
+                &lt;Route path="/*" element={&lt;Construction />}/>
+                &lt;/>)}
+                {(idUserSelected &amp;&amp; !apiStatut &amp;&amp; (error === "Veuillez sélectionner un utilisateur présent" || "Network Error")) &amp;&amp; (
+                &lt;>&lt;Route path="/profil/:userId" element={&lt;Profil />} />
+                &lt;Route path="/profil" element={&lt;Profil />} />
+                &lt;Route path="/" element={&lt;>&lt;Home messageError={error} />&lt;Loading />&lt;/>} />
+                &lt;Route path="/*" element={&lt;Construction />}/>
+                &lt;/>)}
+                &lt;Route path="/" element={&lt;>&lt;Home messageError={error} />&lt;Loading />&lt;/>} />
+                &lt;Route path="/profil/:userId" element={&lt;>&lt;Home messageError={error} />&lt;Loading />&lt;/>} />
+                &lt;Route path="/profil" element={&lt;>&lt;Home messageError={error} />&lt;Loading />&lt;/>} />
+                &lt;Route path="/*" element={&lt;Construction />} />
+            &lt;/Routes>
+
+        &lt;/datasContext.Provider>
+    );
+
+}
+
+export default GetRoutes;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#APISwitch">APISwitch</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Barchart">Barchart</a></li><li><a href="global.html#BarchartD3">BarchartD3</a></li><li><a href="global.html#CardsInfos">CardsInfos</a></li><li><a href="global.html#Construction">Construction</a></li><li><a href="global.html#GetRoutes">GetRoutes</a></li><li><a href="global.html#HeaderComponents">HeaderComponents</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Linechart">Linechart</a></li><li><a href="global.html#LinechartD3">LinechartD3</a></li><li><a href="global.html#Loading">Loading</a></li><li><a href="global.html#NavbarLeft">NavbarLeft</a></li><li><a href="global.html#NavbarTop">NavbarTop</a></li><li><a href="global.html#Profil">Profil</a></li><li><a href="global.html#RadarChartD3">RadarChartD3</a></li><li><a href="global.html#Radarchart">Radarchart</a></li><li><a href="global.html#RadialChartD3">RadialChartD3</a></li><li><a href="global.html#Radialchart">Radialchart</a></li><li><a href="global.html#getAverage">getAverage</a></li><li><a href="global.html#getPerformance">getPerformance</a></li><li><a href="global.html#getUserId">getUserId</a></li><li><a href="global.html#handleUserChoice">handleUserChoice</a></li><li><a href="global.html#retrieveDatasSection">retrieveDatasSection</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Oct 09 2023 02:18:18 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
