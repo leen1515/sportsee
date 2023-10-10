@@ -1,6 +1,6 @@
 import APISwitch from "../../components/APISwitch";
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useContext, useEffect, useState } from "react";
 import { datasContext } from "../../routes/GetRoutes";
 
@@ -76,28 +76,29 @@ function Home({ messageError }) {
    * `id`, and navigates to a specific profile page using the `navigate` function.
    * @param {Number} id The id of the user to navigate to.
    * */
+  
+  const [ error, setError ]= useState(messageError);
   const handleUserChoice = (id) => {
     if(!id) return;
       choiceId(id);
-      navigate(`/profil/${id}`);
+    !error&& navigate(`/profil/${id}`);
     }
-      const [ error, setError ]= useState(messageError);
-
       useEffect(() => {
         setError(messageError)
-        },[messageError]
+        },[messageError, error]
         )
   return (
-      <MainHome>
-          <ModeDatas>
-              {api ? "Les données proviennent de l'API" : "Les données proviennent du Mock"}
-              {error?(<p>{error}</p>) : <p>il n'y a pas d'erreur sur la page</p>}
-          </ModeDatas>
-          <APISwitch />
-            <UserChoice onClick={() => handleUserChoice(18)}>User 18</UserChoice>
-            <UserChoice onClick={() => handleUserChoice(12)}>User 12</UserChoice>
-      </MainHome>
+    <MainHome>
+      <ModeDatas>
+        {api ? "Les données proviennent de l'API" : "Les données proviennent du Mock"}, {/* Added comma here */}
+        {error ? <p>{error}</p> : <p>il n'y a pas d'erreur sur la page</p>}
+      </ModeDatas>
+      <APISwitch />
+      <UserChoice onClick={() => handleUserChoice(18)}>User 18</UserChoice>
+      <UserChoice onClick={() => handleUserChoice(12)}>User 12</UserChoice>
+    </MainHome>
   );
+
 }
 
 

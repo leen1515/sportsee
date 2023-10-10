@@ -25,7 +25,7 @@ function GetRoutes(){
     const [apiStatut, setApiStatut] = useState(false);
     const [idUserSelected, setIdUserSelected] = useState(null);
     const [error, setError] = useState(null);
-
+    
     useEffect(() => {
         const fetchData = async () => {
             setDataLoading(true);
@@ -34,14 +34,15 @@ function GetRoutes(){
                 setError("Veuillez sélectionner un utilisateur présent");
                 setDataLoading(false);
                 return;
-            }
+            } 
     
             try {
                 const isAPI = apiStatut && idUserSelected;
                 const data = isAPI 
                     ? await retrieveDatasSection(undefined, idUserSelected, true)
                     : await retrieveDatasSection(process.env.PUBLIC_URL + '/datas/datasMocked.json', idUserSelected, false);
-                
+    
+                    
                 setDatas(data);
                 setError(null); 
             } catch (err) {
@@ -67,15 +68,15 @@ function GetRoutes(){
     return (
         <datasContext.Provider value={{ datas, api: apiStatut, choiceId, toggleAPIMode, idUserSelected }}>
             <Routes>
-                {(idUserSelected && apiStatut &&  !isDataLoading && error === "Veuillez sélectionner un utilisateur présent") && (
+                {(idUserSelected && apiStatut) && (
                 <><Route path="/profil/:userId" element={<Profil />} />
-                <Route path="/profil" element={<Profil />} />
-                <Route path="/" element={<><Home messageError={error} /></>} />
+                <Route path="/profil" element={<><Home messageError={error} /><Loading /></>} />
+                <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
                 <Route path="/*" element={<Construction />}/>
                 </>)}
-                {(idUserSelected && !apiStatut && !isDataLoading && (error === "Veuillez sélectionner un utilisateur présent" || "Network Error")) && (
+                {(idUserSelected && !apiStatut ) && (
                 <><Route path="/profil/:userId" element={<Profil />} />
-                <Route path="/profil" element={<Profil />} />
+                <Route path="/profil" element={<><Home messageError={error} /><Loading /></>} />
                 <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
                 <Route path="/*" element={<Construction />}/>
                 </>)}

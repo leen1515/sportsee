@@ -39,7 +39,7 @@ const MainGroup = styled.div`
     display:flex;
     flex-direction:row;
     justify-content:space-between;
-    align-items:flex-start;
+    align-items:center;
     flex-wrap:nowrap;
     margin-top: -20px;
     width:80%;

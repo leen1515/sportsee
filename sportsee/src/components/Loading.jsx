@@ -53,8 +53,7 @@ const { idUserSelected } = useContext(datasContext);
 const [ error, setError ]= useState(messageError);
 useEffect(() => {
 setError(messageError)
-return () => {setError(undefined)}
-},[messageError]
+},[messageError, error]
 )
     return (
         <>
@@ -62,7 +61,7 @@ return () => {setError(undefined)}
             <Circle>
             </Circle>
         </CircleContainer>
-        <SelectMessage>{!messageError&& "selection Utilisateur : " +idUserSelected}</SelectMessage>
+        <SelectMessage>{!error&& "selection Utilisateur : " +idUserSelected}</SelectMessage>
             </>
     );
 }
