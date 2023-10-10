@@ -5,7 +5,8 @@ body{
     height:100vh;
     font-family: "Roboto", sans-serif;
     padding:0;
-    margin:auto;
+    max-width: 1280px;
+    margin:0;
     }
 `;
 
