@@ -1,6 +1,6 @@
 import APISwitch from "../../components/APISwitch";
 import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from "react";
 import { datasContext } from "../../routes/GetRoutes";
 

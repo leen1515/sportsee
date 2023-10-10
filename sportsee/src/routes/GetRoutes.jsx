@@ -68,22 +68,12 @@ function GetRoutes(){
     return (
         <datasContext.Provider value={{ datas, api: apiStatut, choiceId, toggleAPIMode, idUserSelected }}>
             <Routes>
-                {(idUserSelected && apiStatut) && (
-                <><Route path="/profil/:userId" element={<Profil />} />
                 <Route path="/profil" element={<><Home messageError={error} /><Loading /></>} />
                 <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
                 <Route path="/*" element={<Construction />}/>
-                </>)}
-                {(idUserSelected && !apiStatut ) && (
-                <><Route path="/profil/:userId" element={<Profil />} />
-                <Route path="/profil" element={<><Home messageError={error} /><Loading /></>} />
-                <Route path="/" element={<><Home messageError={error} /><Loading /></>} />
-                <Route path="/*" element={<Construction />}/>
-                </>)}
-                <Route path="/" element={<><Home messageError={error} /><Loading messageError={error}/></>} />
-                <Route path="/profil/:userId" element={<><Home messageError={error} /><Loading messageError={error}/></>} />
-                <Route path="/profil" element={<><Home messageError={error} /><Loading messageError={error}/></>} />
-                <Route path="/*" element={<Construction />} />
+                {idUserSelected && !isDataLoading && !error? <Route path="/profil/:userId" element={<Profil />} />
+                : <Route path="/profil/:userId" element={<><Home messageError={error} /><Loading messageError={error}/></>} />
+    }
             </Routes>
 
         </datasContext.Provider>
