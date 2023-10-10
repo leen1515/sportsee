@@ -9,12 +9,11 @@ import CardsInfos from '../../components/CardsInfos';
 
 const MainProfil = styled.main`
     position:relative;
-    margin:auto;
+    margin:auto 10%;
     display:flex;
     flex-direction:column;
     white-space: break-spaces;
     width: calc(100% - 117px);
-    max-width: 2000px;
     height:100%;
     max-height: 900px;
     top:50px;
@@ -33,6 +32,8 @@ const MainContainerGraphic = styled.div`
     margin:0;
     display:flex;
     flex-direction:column;
+    max-width: 1000px;
+
 `
 
 const MainGroup = styled.div`
@@ -43,6 +44,8 @@ const MainGroup = styled.div`
     flex-wrap:nowrap;
     margin-top: -20px;
     width:80%;
+    max-width: 800px;
+
     height:fit-content;
 `
 

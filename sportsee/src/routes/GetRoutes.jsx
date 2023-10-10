@@ -52,6 +52,7 @@ function GetRoutes(){
             }
         }
         
+        
         fetchData();
     }, [idUserSelected, apiStatut]);
     
@@ -75,7 +76,6 @@ function GetRoutes(){
                 : <Route path="/profil/:userId" element={<><Home messageError={error} /><Loading messageError={error}/></>} />
     }
             </Routes>
-
         </datasContext.Provider>
     );
 
